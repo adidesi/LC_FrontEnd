@@ -13,7 +13,8 @@ export const routes: Routes = [
   { path: Roles.bob, loadChildren: './dashboard/exporter/exporter.module#ExporterPageModule' },
   // { path: 'exporter', loadChildren: './dashboard/exporter/exporter.module#ExporterPageModule' },
   { path: 'ben-bank', loadChildren: './dashboard/ben-bank/ben-bank.module#BenBankPageModule' },
-  { path: 'iss-bank', loadChildren: './dashboard/iss-bank/iss-bank.module#IssBankPageModule' }
+  { path: 'iss-bank', loadChildren: './dashboard/iss-bank/iss-bank.module#IssBankPageModule' },  { path: 'account-details', loadChildren: './dashboard/account-details/account-details.module#AccountDetailsPageModule' }
+
 
 
 ];

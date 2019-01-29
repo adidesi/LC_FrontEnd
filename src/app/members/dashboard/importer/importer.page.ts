@@ -38,6 +38,6 @@ export class ImporterPage implements OnInit {
   }
   showAccountDetails()
   {
-    
+    this.router.navigate(['account']);
   }
 }
