@@ -3,6 +3,7 @@ import { RestApiService } from '../../../rest-api.service';
 import { AuthenticationService } from '../../../shared/services/authentication.service';
 import { Customer } from '../../../shared/models/Customer';
 import { Bank } from '../../../shared/models/Bank';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -14,7 +15,7 @@ export class ImporterPage implements OnInit {
 
   private customerImporter:Customer;
   
-  constructor(private restapi:RestApiService,private authService:AuthenticationService) { }
+  constructor(private restapi:RestApiService,private authService:AuthenticationService,private router: Router) { }
   users=['a1','a2','a3','a4'];
   ngOnInit() {
     this.authService.checkToken().then(res=>{
@@ -35,5 +36,8 @@ export class ImporterPage implements OnInit {
   {
     this.authService.logout();
   }
-  //showAccountDetails()
+  showAccountDetails()
+  {
+    
+  }
 }
