@@ -38,6 +38,8 @@ export class ImporterPage implements OnInit {
   }
   showAccountDetails()
   {
-    this.router.navigate(['account']);
+    let id: string="account-details";
+    
+    this.router.navigate(['/account-details',id]);
   }
 }

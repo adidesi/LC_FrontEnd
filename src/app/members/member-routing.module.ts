@@ -10,10 +10,11 @@ export const routes: Routes = [
   { path: Roles.token_issuing ,loadChildren: './dashboard/dashboard.module#DashboardPageModule'},
   { path: Roles.token_importer, loadChildren: './dashboard/importer/importer.module#ImporterPageModule' },
   { path: Roles.alice, loadChildren: './dashboard/importer/importer.module#ImporterPageModule' },
-  { path: Roles.bob, loadChildren: './dashboard/exporter/exporter.module#ExporterPageModule' },
+  { path: Roles.bob, loadChildren: './dashboard/account-details/account-details.module#AccountDetailsPageModule' },
   // { path: 'exporter', loadChildren: './dashboard/exporter/exporter.module#ExporterPageModule' },
   { path: 'ben-bank', loadChildren: './dashboard/ben-bank/ben-bank.module#BenBankPageModule' },
-  { path: 'iss-bank', loadChildren: './dashboard/iss-bank/iss-bank.module#IssBankPageModule' },  { path: 'account-details', loadChildren: './dashboard/account-details/account-details.module#AccountDetailsPageModule' }
+  { path: 'iss-bank', loadChildren: './dashboard/iss-bank/iss-bank.module#IssBankPageModule' },
+  { path: 'account-details', loadChildren: './dashboard/account-details/account-details.module#AccountDetailsPageModule' }
 
 
 
