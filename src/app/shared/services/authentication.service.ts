@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, observable } from 'rxjs';
 import {Storage} from '@ionic/storage';
 import { Platform } from '@ionic/angular';
-import {token_importer} from '../constant'
+import {token_importer,token_exporter} from '../constant'
 const TOKEN_KEY='auth-token';
 
 @Injectable({

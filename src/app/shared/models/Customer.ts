@@ -1,26 +1,53 @@
 import { StringifyOptions } from "querystring";
+import { Bank } from "./Bank";
 
 export class Customer {
-    private id: string;
+    private personId: string;
     private companyName: string;
     private lastName: string;
-    private firstName: string;
-    constructor(id: string){
-    //constructor(id: string, firstName:string, lastName:string, companyName:string) {
-        this.id = id;
-        //this.firstName=id;
+    private name: string;
+    private bank:string;
+    private type:string;
+    private bankObj:Bank;
+    constructor(obj:any,personId?: string,){
+        if(obj!=undefined||null){
+            if(obj["personId"]!=undefined||null)
+                this.personId=obj["personId"];
+            if(obj["companyName"]!=undefined||null)
+                this.companyName=obj["companyName"];
+            if(obj["lastName"]!=undefined||null)
+                this.lastName=obj["lastName"];
+            if(obj["name"]!=undefined||null)
+                this.name=obj["name"];
+            if(obj["bank"]!=undefined||null)
+                this.bank=obj["bank"].split('#')[1];
+        }
+        if(personId!=undefined||null)
+            this.personId=personId;
     };
+    setBank(bank:string){
+        this.bank = bank;
+    }
+    setBankObj(bankObj:Bank){
+        this.bankObj = bankObj;
+    }
     setCompanyName(comapanyName: string) {
         this.companyName = comapanyName;
     }
     setLastName(lastName: string) {
         this.lastName = lastName;
     }
-    setFirstName(firstName: string) {
-        this.firstName = firstName;
+    setName(name: string) {
+        this.name = name;
     }
-    getId() {
-        return this.id;
+    getPersonId() {
+        return this.personId;
+    }
+    getBank() {
+        return this.bank;
+    }
+    getBankObj(){
+        return this.bankObj;
     }
     getCompanyName() {
         return this.companyName;
@@ -28,7 +55,7 @@ export class Customer {
     getLastName() {
         return this.lastName;
     }
-    getFirstName() {
-        return this.firstName;
+    getName() {
+        return this.name;
     }
 }

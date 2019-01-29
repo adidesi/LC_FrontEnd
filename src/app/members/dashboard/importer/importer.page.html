@@ -1,36 +1,56 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>Importer</ion-title>
+    <ion-buttons slot="start">
+        <ion-button (click)="logout()">
+        <ion-icon slot="icon-only" name="log-out"></ion-icon>
+          </ion-button>
+        
+      </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content *ngIf ="customerImporter">
+<ion-content class="dis_scroll" *ngIf ="customerImporter">
 
-  <img src="/assets/icon/banklogo.png" alt="logo" style="border: 1px black solid">
+  <img src="/assets/icon/banklogo_issuing.png" alt="logo" style="border: 1px black solid">
   <ion-card>
     <ion-card-header>
       <div class="row">
-          <div ><ion-card-subtitle class="my-label">Welcome, {{customerImporter.name}}</ion-card-subtitle></div>
-          <div text-right><ion-button  fill="outline"shape="round" size="small">Account Details</ion-button></div><br>
+          <div ><ion-card-subtitle class="my-label">Welcome, {{customerImporter.name}} </ion-card-subtitle></div>
+          <div text-right><ion-button  fill="outline"shape="round" size="small" (click)="showAccountDetails()">Account Details</ion-button></div><br>
       </div>
       <div class="row">
         <div  text-center>
           <ion-label>Account Balance</ion-label>
         </div>
       </div>
-      <ion-card-title text-center>€ 53,2540.00</ion-card-title>
+      <ion-card-title text-center>€ 5,32,540.00</ion-card-title>
     </ion-card-header>
   </ion-card>
-  <ion-list [virtualScroll]="users" [approxItemHeight]="'88px'">
-    <ion-card *virtualItem="let user">
-      <ion-item>
-          <h1>TITLE</h1>
-      </ion-item>
-      <ion-content>
-        <h2>CONTENT</h2>
-      </ion-content>
-    </ion-card>
-  </ion-list>
+  <div class="my-label_1" text-center>LC</div>
+  <div class="enable_scroll">
+     <ion-card>
+        <ion-virtual-scroll [items]="users" >
+              <ion-item *virtualItem="let user">
+                  <ion-card>
+                    <ion-card-content>
+                      USERadsaGFAGSRGKJBAO;LAGDGLAEGHIALSGTGFBSAGBJU
+                    </ion-card-content>
+                  </ion-card>
+              </ion-item>  
+        </ion-virtual-scroll>
+      
+      </ion-card>
+  </div>
+  <!-- <br>
+  <br>
+  <br> -->
+  
+  
+
+  
+</ion-content>   
+  
   <ion-fab vertical="bottom" horizontal="center" id="fab1" slot="fixed">
         <ion-fab-button onclick="clickMainFAB('fab1')" color="dark">
           <ion-icon name="add"></ion-icon>
@@ -42,5 +62,18 @@
         </ion-fab-list>
   </ion-fab>
 
- </ion-content>
- 
+
+ <ion-toolbar color="dark">
+    <ion-buttons slot="secondary">
+      <ion-button>
+        <ion-icon slot="icon-only" name="help-circle"></ion-icon>
+      </ion-button>
+      
+    </ion-buttons>
+    <ion-buttons slot="primary">
+      <ion-button>
+        <ion-icon slot="icon-only" name="information-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    
+  </ion-toolbar>

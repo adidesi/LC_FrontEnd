@@ -2,7 +2,23 @@
     font-size: 0.8em;
     font-family:Georgia, 'Times New Roman', Times, serif
   }
- 
+  .my-label_1
+  {
+    font-size: 1em;
+    font-weight: bold;
+    font-family:Georgia, 'Times New Roman', Times, serif
+  }
+  .dis_scroll{
+    --overflow:hidden;
+  }
+  .enable_scroll{
+    max-height: 40%;
+    overflow-y: scroll;
+  }
+  .tool_css{
+    --padding-bottom:0px;
+  }
+
 //   ion-content
 //   {
 //     --ion-background-color: linear-gradient(rgb(24,253,24), white, rgb(24, 253, 24));

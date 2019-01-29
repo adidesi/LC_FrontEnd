@@ -1,5 +1,8 @@
 export const token_importer='importer' ;
 export const alice='alice' ;
+export const bob='bob' ;
+export const bod='BoD';
+export const eb='EB';
 export const token_exporter='exporter' ;
 export const token_issuing='issuing_bank' ;
 export const token_beneficiary='beneficiary_bank' ;

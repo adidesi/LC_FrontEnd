@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { RestApiService } from '../../../rest-api.service';
 import { AuthenticationService } from '../../../shared/services/authentication.service';
 import { Customer } from '../../../shared/models/Customer';
+import { Bank } from '../../../shared/models/Bank';
 
 
 @Component({
@@ -12,18 +13,27 @@ import { Customer } from '../../../shared/models/Customer';
 export class ImporterPage implements OnInit {
 
   private customerImporter:Customer;
+  
   constructor(private restapi:RestApiService,private authService:AuthenticationService) { }
-  users=['a1','a2','a3'];
+  users=['a1','a2','a3','a4'];
   ngOnInit() {
     this.authService.checkToken().then(res=>{
       this.authService.tokenState.subscribe(result=>{
         this.customerImporter = null;
         this.restapi.getCustomer(result).subscribe((res:Customer)=>{
-          this.customerImporter = res;
-          console.log('RES',this.customerImporter);
+         this.customerImporter = new Customer(res);
+          this.restapi.getBank(this.customerImporter.getBank()).subscribe((resBank:Bank)=>{
+            this.customerImporter.setBankObj(new Bank(resBank));
+          });
+          console.log('FINAL',this.customerImporter);
         });
       });
     });
+    
   }
-
+  logout()
+  {
+    this.authService.logout();
+  }
+  //showAccountDetails()
 }
