@@ -1,3 +1,4 @@
+import { ProductDetails } from "./ProductDetails";
 
 export class LetterOfCredit {
     private letterId: string;
@@ -6,12 +7,13 @@ export class LetterOfCredit {
     private issuingBank: string;
     private exportingBank: string;
     private status:string;
+    private productDetails_obj:ProductDetails;
     constructor(obj:any,letterId?: string,){
         if(obj!=undefined||null){
             if(obj["letterId"]!=undefined||null)
                 this.letterId=obj["letterId"];
             if(obj["applicant"]!=undefined||null)
-                this.applicant=obj["applicant"];
+                this.applicant=obj["applicant"].split('#')[1];
             if(obj["beneficiary"]!=undefined||null)
                 this.beneficiary=obj["beneficiary"];
             if(obj["issuingBank"]!=undefined||null)
@@ -42,6 +44,9 @@ export class LetterOfCredit {
     setExportingBank(exportingBank: string) {
         this.exportingBank = exportingBank;
     }
+    setProdObj(productDetails_obj:ProductDetails){
+        this.productDetails_obj = productDetails_obj;
+    }
     getLetterId() {
         return this.letterId;
     }
@@ -59,5 +64,8 @@ export class LetterOfCredit {
     }
     getIssuingBank() {
         return this.issuingBank;
+    }
+    getProdObj(){
+        return this.productDetails_obj;
     }
 }

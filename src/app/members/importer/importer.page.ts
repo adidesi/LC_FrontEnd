@@ -20,6 +20,7 @@ export class ImporterPage implements OnInit {
   LCs=new Array<LetterOfCredit>();
 
   ngOnInit() {
+   
     this.authService.checkToken().then(res=>{
       this.authService.tokenState.subscribe(result=>{
         this.customerImporter = null;
@@ -30,11 +31,14 @@ export class ImporterPage implements OnInit {
           });
         });
         this.restapi.getLCs().subscribe((resLCs:LetterOfCredit)=>{
-          for(var i = 0;i<=2;i++){
+          for(var i = 0;i<=LetterOfCredit.length;i++){
             //this.LCs[i]=resLCs[i];
             this.LCs.push(new LetterOfCredit(resLCs[i]))
+            
             console.log("LC",this.LCs[i]);
+            
           }
+          console.log("LC length",this.LCs.length);
           
         });
       });
@@ -43,6 +47,7 @@ export class ImporterPage implements OnInit {
   }
   logout()
   {
+    this.LCs=[];
     this.authService.logout();
   }
   showAccountDetails()

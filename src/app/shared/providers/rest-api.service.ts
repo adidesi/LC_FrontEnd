@@ -6,6 +6,7 @@ import {token_importer,token_exporter} from '../constant';
 import { Customer } from '../models/Customer';
 import { Bank } from '../models/Bank';
 import { LetterOfCredit } from '../models/LetterOfCredit';
+import { ProductDetails } from '../models/ProductDetails';
 const apiUrl = "http://192.168.0.102:3000/api/";
 @Injectable({
   providedIn: 'root'
@@ -27,5 +28,9 @@ export class RestApiService {
   getLC(id:string)
   {
     return this.http.get<LetterOfCredit>(apiUrl+'LetterOfCredit/'+id);
+  }
+  getProductDetails()
+  {
+    return this.http.get<ProductDetails>(apiUrl+'LetterOfCredit/');
   }
 }

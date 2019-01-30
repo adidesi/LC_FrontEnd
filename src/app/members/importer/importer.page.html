@@ -10,7 +10,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="dis_scroll" *ngIf ="customerImporter,LCs">
+<ion-content class="dis_scroll" *ngIf ="customerImporter">
 
   <img src="/assets/icon/banklogo_issuing.png" alt="logo" style="border: 1px black solid">
   <ion-card>
@@ -34,7 +34,7 @@
               <ion-item *virtualItem="let LC">
                   <ion-card>
                     <ion-card-content>
-                      {{LC.applicant}}
+                      {{LC.letterId}}
                     </ion-card-content>
                   </ion-card>
               </ion-item>  
