@@ -39,7 +39,7 @@ export class ImporterPage implements OnInit {
   showAccountDetails()
   {
     let id: string="account-details";
-    
-    this.router.navigate(['/account-details',id]);
+    console.log("Clicked ")
+    this.router.navigate(['/account-details',{customer:this.customerImporter}]);
   }
 }
