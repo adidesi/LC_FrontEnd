@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Customer } from '../../../shared/models/Customer';
-import { RestApiService } from '../../../rest-api.service';
-import { AuthenticationService } from '../../../shared/services/authentication.service';
+import { RestApiService } from '../../../shared/providers/rest-api.service';
+import { AuthenticationService } from '../../../shared/providers/authentication.service';
 
 @Component({
   selector: 'app-exporter',
@@ -19,7 +19,6 @@ export class ExporterPage implements OnInit {
         this.customerExporter = null;
         this.restapi.getCustomer(result).subscribe((res:Customer)=>{
           this.customerExporter = res;
-          console.log('RES',this.customerExporter);
         });
       });
     });

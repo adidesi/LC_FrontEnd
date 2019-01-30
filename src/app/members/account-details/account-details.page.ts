@@ -1,5 +1,5 @@
 import { Component, OnInit, Renderer, ElementRef } from '@angular/core';
-import { AuthenticationService } from '../../../shared/services/authentication.service';
+import { AuthenticationService } from '../../shared/providers/authentication.service';
 
 @Component({
   selector: 'app-account-details',

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { RestApiService } from '../../../rest-api.service';
-import { AuthenticationService } from '../../../shared/services/authentication.service';
-import { Customer } from '../../../shared/models/Customer';
-import { Bank } from '../../../shared/models/Bank';
+import { RestApiService } from '../../shared/providers/rest-api.service';
+import { AuthenticationService } from '../../shared/providers/authentication.service';
+import { Customer } from '../../shared/models/Customer';
+import { Bank } from '../../shared/models/Bank';
 import { Router } from '@angular/router';
 
 
@@ -26,7 +26,6 @@ export class ImporterPage implements OnInit {
           this.restapi.getBank(this.customerImporter.getBank()).subscribe((resBank:Bank)=>{
             this.customerImporter.setBankObj(new Bank(resBank));
           });
-          console.log('FINAL',this.customerImporter);
         });
       });
     });
@@ -38,8 +37,6 @@ export class ImporterPage implements OnInit {
   }
   showAccountDetails()
   {
-    let id: string="account-details";
-    console.log("Clicked ")
-    this.router.navigate(['/account-details',{customer:this.customerImporter}]);
+    this.router.navigate(['members','accountDetails']);
   }
 }
