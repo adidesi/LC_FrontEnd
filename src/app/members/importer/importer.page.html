@@ -10,7 +10,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="dis_scroll" *ngIf ="customerImporter">
+<ion-content class="dis_scroll" *ngIf ="customerImporter,LCs">
 
   <img src="/assets/icon/banklogo_issuing.png" alt="logo" style="border: 1px black solid">
   <ion-card>
@@ -30,11 +30,11 @@
   <div class="my-label_1" text-center>LC</div>
   <div class="enable_scroll">
      <ion-card>
-        <ion-virtual-scroll [items]="users" >
-              <ion-item *virtualItem="let user">
+        <ion-virtual-scroll [items]="LCs" >
+              <ion-item *virtualItem="let LC">
                   <ion-card>
                     <ion-card-content>
-                      USERadsaGFAGSRGKJBAO;LAGDGLAEGHIALSGTGFBSAGBJU
+                      {{LC.applicant}}
                     </ion-card-content>
                   </ion-card>
               </ion-item>  

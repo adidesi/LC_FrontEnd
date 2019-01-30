@@ -4,6 +4,7 @@ import { AuthenticationService } from '../../shared/providers/authentication.ser
 import { Customer } from '../../shared/models/Customer';
 import { Bank } from '../../shared/models/Bank';
 import { Router } from '@angular/router';
+import { LetterOfCredit } from '../../shared/models/LetterOfCredit';
 
 
 @Component({
@@ -16,7 +17,8 @@ export class ImporterPage implements OnInit {
   private customerImporter:Customer;
   
   constructor(private restapi:RestApiService,private authService:AuthenticationService,private router: Router) { }
-  users=['a1','a2','a3','a4'];
+  LCs=new Array<LetterOfCredit>();
+
   ngOnInit() {
     this.authService.checkToken().then(res=>{
       this.authService.tokenState.subscribe(result=>{
@@ -26,6 +28,14 @@ export class ImporterPage implements OnInit {
           this.restapi.getBank(this.customerImporter.getBank()).subscribe((resBank:Bank)=>{
             this.customerImporter.setBankObj(new Bank(resBank));
           });
+        });
+        this.restapi.getLCs().subscribe((resLCs:LetterOfCredit)=>{
+          for(var i = 0;i<=2;i++){
+            //this.LCs[i]=resLCs[i];
+            this.LCs.push(new LetterOfCredit(resLCs[i]))
+            console.log("LC",this.LCs[i]);
+          }
+          
         });
       });
     });
