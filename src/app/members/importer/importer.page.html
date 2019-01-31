@@ -32,10 +32,30 @@
      <ion-card>
         <ion-virtual-scroll [items]="LCs" >
               <ion-item *virtualItem="let LC">
-                  <ion-card>
-                    <ion-card-content>
-                      {{LC.letterId}}
-                    </ion-card-content>
+                  <ion-card style="width: -webkit-fill-available">
+                    <ion-card-header>
+                      <ion-grid>
+                        <ion-row>
+                          <ion-col size="3">
+                            
+                                <img src="/assets/icon/doc_LC.png">  
+                            
+                          </ion-col>
+                          <ion-col>
+                            <ion-row><ion-card-subtitle style="font-size:0.9em;color: crimson;" text-right>{{LC.status}}</ion-card-subtitle></ion-row>
+                            <ion-row><ion-card-subtitle class="refID" style="font-weight: bold;color:black;" text-center>{{LC.letterId}}</ion-card-subtitle><hr style="display: table-column;"></ion-row>
+                            <ion-row><ion-card-subtitle text-center>Total Value</ion-card-subtitle></ion-row>
+                         
+                            <ion-row><ion-card-subtitle class="refID" text-center>€ {{LC.productDetails_obj.pricePerUnit*LC.productDetails_obj.quantity}}</ion-card-subtitle></ion-row>
+                          </ion-col>
+                        </ion-row>
+
+                                            
+                      
+                      
+                    </ion-grid>
+                  </ion-card-header>
+                  
                   </ion-card>
               </ion-item>  
         </ion-virtual-scroll>
