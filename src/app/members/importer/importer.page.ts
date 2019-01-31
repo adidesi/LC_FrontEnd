@@ -18,9 +18,10 @@ export class ImporterPage implements OnInit {
   
   constructor(private restapi:RestApiService,private authService:AuthenticationService,private router: Router) { }
   LCs=new Array<LetterOfCredit>();
+  
 
   ngOnInit() {
-   
+    console.log("LCs=",this.LCs.length);
     this.authService.checkToken().then(res=>{
       this.authService.tokenState.subscribe(result=>{
         this.customerImporter = null;
@@ -30,18 +31,17 @@ export class ImporterPage implements OnInit {
             this.customerImporter.setBankObj(new Bank(resBank));
           });
         });
-        this.restapi.getLCs().subscribe((resLCs:LetterOfCredit)=>{
-          for(var i = 0;i<=LetterOfCredit.length;i++){
-            //this.LCs[i]=resLCs[i];
-            this.LCs.push(new LetterOfCredit(resLCs[i]))
-            
-            console.log("LC",this.LCs[i]);
-            
-          }
-          console.log("LC length",this.LCs.length);
-          
-        });
+        
       });
+    });
+    this.restapi.getLCs().subscribe((resLCs:LetterOfCredit[])=>{
+     console.log('a',resLCs.length);
+      for(var i = 0;i<resLCs.length;i++){
+        this.LCs.push(new LetterOfCredit(resLCs[i]))
+        console.log("LC",this.LCs[i]);
+      }
+      console.log("LC length",this.LCs.length);
+        
     });
     
   }

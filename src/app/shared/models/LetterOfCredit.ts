@@ -22,8 +22,8 @@ export class LetterOfCredit {
             this.exportingBank=obj["exportingBank"];
             if(obj["status"]!=undefined||null)
             this.status=obj["status"];
-            // if(obj["bank"]!=undefined||null)
-            //     this.bank=obj["bank"].split('#')[1];
+            if(obj["productDetails"]!=undefined||null)
+                this.productDetails_obj=new ProductDetails(obj["productDetails"]);
         }
         if(letterId!=undefined||null)
             this.letterId=letterId;

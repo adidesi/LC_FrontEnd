@@ -23,7 +23,7 @@ export class RestApiService {
   }
   getLCs()
   {
-    return this.http.get<LetterOfCredit>(apiUrl+'LetterOfCredit/');
+    return this.http.get<LetterOfCredit[]>(apiUrl+'LetterOfCredit/');
   }
   getLC(id:string)
   {
