@@ -5,6 +5,8 @@ import { Customer } from '../../shared/models/Customer';
 import { Bank } from '../../shared/models/Bank';
 import { Router } from '@angular/router';
 import { LetterOfCredit } from '../../shared/models/LetterOfCredit';
+import { SessionService } from '../../shared/providers/session.service';
+import {token_importer} from '../../shared/constant'
 
 
 @Component({
@@ -16,7 +18,7 @@ export class ImporterPage implements OnInit {
 
   private customerImporter:Customer;
   
-  constructor(private restapi:RestApiService,private authService:AuthenticationService,private router: Router) { }
+  constructor(private restapi:RestApiService,private authService:AuthenticationService,private sessionService:SessionService,private router: Router) { }
   LCs=new Array<LetterOfCredit>();
   
 
@@ -28,10 +30,12 @@ export class ImporterPage implements OnInit {
         this.restapi.getCustomer(result).subscribe((res:Customer)=>{
          this.customerImporter = new Customer(res);
           this.restapi.getBank(this.customerImporter.getBank()).subscribe((resBank:Bank)=>{
-            this.customerImporter.setBankObj(new Bank(resBank));
+            this.customerImporter.setBankObj(new Bank(resBank,'BKDOIT60','IT60 9876 5321 9090'));
+            this.customerImporter.setType(token_importer);
+            this.sessionService.storeCustomer(this.customerImporter);
+            this.sessionService.storeBank(this.customerImporter.getBankObj());
           });
         });
-        
       });
     });
     this.restapi.getLCs().subscribe((resLCs:LetterOfCredit[])=>{

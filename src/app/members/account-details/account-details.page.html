@@ -9,51 +9,46 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content *ngIf="customer">
     <img src="/assets/icon/banklogo_issuing.png" alt="logo" style="border: 1px black solid;">
 <ion-card>
       <ion-card-content>
           <div color="dark" style="font-size: xx-small" text-center><ion-label>ACCOUNT DETAILS</ion-label></div><br>
           <ion-label color="dark" class="label_size">Name:</ion-label>
           <ion-item>
-              
-              <ion-input id="dynamicDisabled1" value="Alice" disabled class="my-details"></ion-input>
+              <ion-input id="inputTextDynamicDisabled1" [(ngModel)]=customer.name disabled={{allowEdit}} class="my-details"></ion-input>
             </ion-item>
-            <ion-label color="dark" class="label_size">Company Name:</ion-label>
+          <ion-label color="dark" class="label_size">Company Name:</ion-label>
+          <ion-item>     
+              <ion-input id="inputTextDynamicDisabled2" [(ngModel)]=customer.companyName disabled={{allowEdit}} class="my-details"></ion-input>
+          </ion-item>
+          <ion-label color="dark" class="label_size">IBAN:</ion-label>
+          <ion-item>    
+              <ion-input  value={{customer.bankObj.IBAN}}  disabled class="my-details"></ion-input>
+            </ion-item>
+          <ion-label color="dark" class="label_size">Swift Code:</ion-label>
+          <ion-item>
+              <ion-input  value={{customer.bankObj.swiftCode}} disabled class="my-details"></ion-input>
+          </ion-item>
+          <ion-label color="dark" class="label_size">Bank Name:</ion-label>
           <ion-item>
               
-              <ion-input id="dynamicDisabled2" value="XYZ" disabled class="my-details"></ion-input>
-            </ion-item>
-            <ion-label color="dark" class="label_size">IBAN:</ion-label>
-          <ion-item>
-              
-              <ion-input  value="IT60 9876 5321 9090" disabled class="my-details"></ion-input>
-            </ion-item>
-            <ion-label color="dark" class="label_size">Swift Code:</ion-label>
-          <ion-item>
-              
-              <ion-input  value="BKDOIT60" disabled class="my-details"></ion-input>
-            </ion-item>
-            <ion-label color="dark" class="label_size">Bank Name:</ion-label>
-          <ion-item>
-              
-              <ion-input id="dynamicDisabled3" value="Bank of Dinero" disabled class="my-details"></ion-input>
+              <ion-input value={{customer.bankObj.name}} disabled class="my-details"></ion-input>
             </ion-item>
         </ion-card-content>
 </ion-card>
 </ion-content>
 
-<ion-fab vertical="bottom" horizontal="center" id="fab1" slot="fixed" class="fab">
-    <ion-fab-button (click)="toggleBoolean('dynamicDisabled', 'disabled','fab1')" color="dark">
+<ion-fab vertical="bottom" horizontal="center" id="editFAB" slot="fixed" class="fab" *ngIf="allowEdit">
+    <ion-fab-button (click)="toggleEditOrSave()" color="dark">
       <ion-icon name="create"></ion-icon>
     </ion-fab-button>
-  
 </ion-fab>
-<ion-fab vertical="bottom" horizontal="center" id="fab2" slot="fixed" class="fab1">
-    <ion-fab-button (click)="toggleBoolean('dynamicDisabled', 'disabled','fab2')" color="dark">
+<ion-fab vertical="bottom" horizontal="center" id="saveFAB" slot="fixed" class="fab1" *ngIf="!allowEdit">
+    <ion-fab-button (click)="toggleEditOrSave()" color="dark">
       <ion-icon name="save"></ion-icon>
     </ion-fab-button>
-    </ion-fab>
+  </ion-fab>
 
 <ion-toolbar color="dark">
 <ion-buttons slot="secondary">

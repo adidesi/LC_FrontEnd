@@ -1,5 +1,10 @@
 import { Component, OnInit, Renderer, ElementRef } from '@angular/core';
 import { AuthenticationService } from '../../shared/providers/authentication.service';
+import { SessionService } from '../../shared/providers/session.service';
+import { Customer } from '../../shared/models/Customer';
+import { Bank } from '../../shared/models/Bank';
+import { RestApiService } from '../../shared/providers/rest-api.service';
+
 
 @Component({
   selector: 'app-account-details',
@@ -9,27 +14,33 @@ import { AuthenticationService } from '../../shared/providers/authentication.ser
 export class AccountDetailsPage implements OnInit {
   fabToHide: HTMLElement;
   save: HTMLElement;
-  constructor(private renderer: Renderer, private element: ElementRef,private authService:AuthenticationService) { }
+  allowEdit:boolean;
+  private customer:Customer;
+  constructor(private renderer: Renderer, private element: ElementRef,
+    private authService:AuthenticationService,
+    private sessionService:SessionService,
+    private restApi:RestApiService) { }
 
   ngOnInit() {
-    this.save = this.element.nativeElement.getElementsByClassName("fab1")[0];
-    this.renderer.setElementStyle(this.save,'opacity','0');
-    this.fabToHide = this.element.nativeElement.getElementsByClassName("fab")[0];
-    
+    //this.save = this.element.nativeElement.getElementsById("fab1");
+    //this.renderer.setElementStyle(this.save,'hidden','true');
+    this.allowEdit=true;
+    this.sessionService.loadBank().then(resBank=>{
+      this.sessionService.loadCustomer().then(resCust=>{
+        this.customer = new Customer(resCust);
+        this.customer.setBankObj(resBank);
+        });
+    });    
   }
-  toggleBoolean(id, prop) {
-
-      
-      this.renderer.setElementStyle(this.fabToHide, 'opacity', '0');
-      this.renderer.setElementStyle(this.save, 'opacity', '1');
-      for(var i = 1;i<=3;i++){
-        var el = document.getElementById(id+i);
-        var isTrue = el[prop] ? false : true;
-        el[prop] = isTrue;
-        console.log('in toggleBoolean, setting', prop, 'to', isTrue);
-  
-      }
-
+  toggleEditOrSave() {
+    if(!this.allowEdit){//Save Button is Clicked. And We have to Save the Bank Details
+      //this.restApi.updateCustomerDetails();
+      console.log('data saved');
+    } 
+    console.log('before',this.allowEdit);
+    this.allowEdit=(this.allowEdit)?false:true;
+    console.log('after',this.allowEdit);
+    
           
   }
   logout()

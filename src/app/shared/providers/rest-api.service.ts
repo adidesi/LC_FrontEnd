@@ -13,6 +13,7 @@ const apiUrl = "http://192.168.0.102:3000/api/";
 })
 export class RestApiService {
 
+
   constructor(private http: HttpClient) { }
   getCustomer(id:string){
     return this.http.get<Customer>(apiUrl+'Customer/'+id);
@@ -32,5 +33,8 @@ export class RestApiService {
   getProductDetails()
   {
     return this.http.get<ProductDetails>(apiUrl+'LetterOfCredit/');
+  }
+  updateCustomerDetails(): any {
+    throw new Error("Method not implemented.");
   }
 }

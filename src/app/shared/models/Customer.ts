@@ -19,8 +19,14 @@ export class Customer {
                 this.lastName=obj["lastName"];
             if(obj["name"]!=undefined||null)
                 this.name=obj["name"];
-            if(obj["bank"]!=undefined||null)
-                this.bank=obj["bank"].split('#')[1];
+            if(obj["bank"]!=undefined||null){
+                if(obj["bank"].toString().search('#')!=-1)
+                    this.bank=obj["bank"].split('#')[1];
+                else
+                    this.bank=obj["bank"];
+            }
+
+            
         }
         if(personId!=undefined||null)
             this.personId=personId;
@@ -39,6 +45,9 @@ export class Customer {
     }
     setName(name: string) {
         this.name = name;
+    }
+    setType(type:string){
+        this.type = type;
     }
     getPersonId() {
         return this.personId;
