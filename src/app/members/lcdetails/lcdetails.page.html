@@ -1,6 +1,6 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>LCDetails</ion-title>
+  <ion-toolbar *ngIf="fetchingTransactionsComplete">
+    <ion-title>LC Details {{letterOfCredit.letterId}}</ion-title>
     <ion-buttons slot="end">
             <ion-button (click)="logout()">
               <ion-icon slot="icon-only" name="log-out"></ion-icon>
@@ -10,46 +10,46 @@
 </ion-header>
 
 <ion-content *ngIf="fetchingTransactionsComplete">
-        <img src="/assets/icon/banklogo_issuing.png" alt="logo" style="border: 1px black solid">
-        <ion-card>
+    <img src="/assets/icon/banklogo_issuing.png" alt="logo" style="border: 1px black solid">
+    <ion-card>
+        <ion-card-header>
+            <ion-card-title>{{letterOfCredit.letterId}}</ion-card-title>
+        </ion-card-header>
+        <ion-card style="width: fit-content;margin-top: auto;margin-bottom:10px;">
             <ion-card-header>
-                <ion-card-title>{{letterOfCredit.letterId}}</ion-card-title>
+                <ion-card-subtitle>
+                    <p>Application Request:</p>
+                    <ion-input [(ngModel)]="letterOfCredit.applicant" placeholder='Applicant Name' readonly={{!createLC}}></ion-input>
+                </ion-card-subtitle>
+                <ion-card-subtitle>
+                    <p>Supplier Request:</p>
+                    <ion-input [(ngModel)]="letterOfCredit.beneficiary" placeholder='Beneficiary Name' readonly={{!createLC}}></ion-input>
+                </ion-card-subtitle>
             </ion-card-header>
-            <ion-card style="width: fit-content;margin-top: auto;margin-bottom:10px;">
-                <ion-card-header>
-                    <ion-card-subtitle>
-                        <p>Application Request:</p>
-                        <ion-input value={{letterOfCredit.applicant|uppercase}} placeholder='Applicant Name' readonly={{!createLC}}></ion-input>
-                    </ion-card-subtitle>
-                    <ion-card-subtitle>
-                        <p>Supplier Request:</p>
-                        <ion-input value={{letterOfCredit.beneficiary|uppercase}} placeholder='Beneficiary Name' readonly={{!createLC}}></ion-input>
-                    </ion-card-subtitle>
-                </ion-card-header>
-            </ion-card>  
-            <ion-card style="width: 50%;margin-top: auto;">
-                <ion-card-header>
-                    <ion-card-subtitle>Product Details:</ion-card-subtitle>
-                </ion-card-header>
-                <ion-list class="no-padding">
-                    <ion-item>
-                        <ion-label color="dark" class="no-padding label_size"><p>Type: </p></ion-label>
-                        <ion-input value={{letterOfCredit.productDetails_obj.productType|uppercase}} placeholder='Beneficiary Name' readonly={{!createLC}}></ion-input>         
-                    </ion-item>
-                    <ion-item>
-                        <ion-label color="dark" class="no-padding label_size"><p>Quantity: </p></ion-label>
-                        <ion-input value={{letterOfCredit.productDetails_obj.quantity}} placeholder='Beneficiary Name' readonly={{!createLC}}></ion-input>
-                    </ion-item>
-                    <ion-item>
-                        <ion-label color="dark" class="no-padding label_size"><p>Price Per Unit: € </p></ion-label>
-                        <ion-input value={{letterOfCredit.productDetails_obj.pricePerUnit}} placeholder='Beneficiary Name' readonly={{!createLC}}></ion-input>
-                    </ion-item>
-                    <ion-item>
-                        <ion-label color="dark" class="no-padding label_size"><p>TOTAL: € </p></ion-label>
-                        <ion-input value={{letterOfCredit.productDetails_obj.quantity*letterOfCredit.productDetails_obj.pricePerUnit}} placeholder='Beneficiary Name' readonly={{!createLC}}></ion-input>
-                    </ion-item> 
-                </ion-list>
-            </ion-card>
+        </ion-card>  
+        <ion-card style="width: 50%;margin-top: auto;">
+            <ion-card-header>
+                <ion-card-subtitle>Product Details:</ion-card-subtitle>
+            </ion-card-header>
+            <ion-list class="no-padding">
+                <ion-item>
+                    <ion-label color="dark" class="no-padding label_size"><p>Type: </p></ion-label>
+                    <ion-input [(ngModel)]="letterOfCredit.productDetails_obj.productType" placeholder='Product Type' readonly={{!createLC}}></ion-input>         
+                </ion-item>
+                <ion-item>
+                    <ion-label color="dark" class="no-padding label_size"><p>Quantity: </p></ion-label>
+                    <ion-input [(ngModel)]="letterOfCredit.productDetails_obj.quantity" placeholder='Quantity' readonly={{!createLC}}></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label color="dark" class="no-padding label_size"><p>Price Per Unit: € </p></ion-label>
+                    <ion-input [(ngModel)]="letterOfCredit.productDetails_obj.pricePerUnit" placeholder='Price per Unit' readonly={{!createLC}}></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label color="dark" class="no-padding label_size"><p>TOTAL: € </p></ion-label>
+                    <ion-input value={{letterOfCredit.productDetails_obj.quantity*letterOfCredit.productDetails_obj.pricePerUnit}} placeholder='Total Price' readonly></ion-input>
+                </ion-item> 
+            </ion-list>
+        </ion-card>
         <ion-card>
             <ion-card-subtitle><p>Terms and Conditions:</p> </ion-card-subtitle>
             <ion-item *ngFor="let items of letterOfCredit.rules">
@@ -57,9 +57,26 @@
             </ion-item> 
         </ion-card>
     </ion-card>
-        
 
-<ion-fab vertical="bottom" horizontal="center" id="fab1" slot="fixed">
+</ion-content> 
+<ion-fab vertical="bottom" horizontal="center" slot="fixed" *ngIf="createLC">
+        <ion-fab-button id="CreateLCFAB" color="dark" (click)="createNewLC()">
+            <ion-icon name="save"></ion-icon>
+        </ion-fab-button>
+</ion-fab>
+<ion-toolbar color="dark">
+    <ion-buttons slot="secondary">
+        <ion-button>
+        <ion-icon slot="icon-only" name="help-circle"></ion-icon>
+        </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="primary">
+        <ion-button>
+        <ion-icon slot="icon-only" name="information-circle-outline"></ion-icon>
+        </ion-button>
+    </ion-buttons>
+</ion-toolbar>
+<!-- <ion-fab vertical="bottom" horizontal="center" id="fab1" slot="fixed">
     <ion-fab-button color="dark">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
@@ -93,6 +110,6 @@
             LC 8
         </ion-button>
     </ion-fab-list>
-</ion-fab>
-</ion-content>
+</ion-fab> -->
+
 

@@ -49,7 +49,9 @@ export class LCDetailsPage implements OnInit {
       });
   }
   }
-
+  createNewLC(){
+    console.log('NOW',this.letterOfCredit);
+  }
   logout()
   {
     this.authService.logout();

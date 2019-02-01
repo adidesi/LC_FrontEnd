@@ -14,10 +14,6 @@ export const routes: Routes = [
   { path: 'accountDetails', loadChildren: './account-details/account-details.module#AccountDetailsPageModule' },
   { path: 'lcdetails/:letterId', loadChildren: './lcdetails/lcdetails.module#LCDetailsPageModule' },
   { path: 'createLC', loadChildren: './lcdetails/lcdetails.module#LCDetailsPageModule' }
-
-
-
-
 ];
 
 @NgModule({
