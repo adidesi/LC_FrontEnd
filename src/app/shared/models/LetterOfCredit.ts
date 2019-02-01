@@ -19,14 +19,14 @@ export class LetterOfCredit {
             this.exportingBank=(obj["exportingBank"]!=undefined||null)?obj["exportingBank"].split('#')[1]:'';
             this.status=(obj["status"]!=undefined||null)?obj["status"]:'';
             this.productDetails_obj=(obj["productDetails"]!=undefined||null)?new ProductDetails(obj["productDetails"]):new ProductDetails();
-            if(obj["approval"]!=undefined||[]||null){
+            if(obj["approval"]!=undefined||null){
                     for(var i=0;i<obj["approval"].length;i++){
                         this.approval.push(obj["approval"][i]);
                     }
             }else{
                 this.approval=new Array();
             }
-            if(obj["rules"]!=undefined||[]||null){
+            if(obj["rules"]!=undefined||null){
                 for(var i=0;i<obj["rules"].length;i++){
                     this.rules.push(obj["rules"][i]["ruleText"]);
                 }

@@ -46,5 +46,8 @@ export class RestApiService {
   {
     return this.http.get<Transaction[]>(apiUrl+'Reject');
   }
-
+putLCDetails(data)
+{
+    return this.http.post<LetterOfCredit>(apiUrl+'/InitialApplication', JSON.stringify(data));
+}
 }

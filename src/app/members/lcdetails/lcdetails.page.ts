@@ -26,7 +26,8 @@ export class LCDetailsPage implements OnInit {
     this.createLC=(this.router.snapshot.paramMap.get('letterId')!=null||''||undefined)?false:true;
     if(this.createLC){
       this.sessionService.loadCustomer().then((resMe:Customer)=>{
-        this.letterOfCredit=new LetterOfCredit();
+        this.letterOfCredit=new LetterOfCredit({applicant:'x#alice',beneficiary:'x#bob'},'L'+Date.now().toString()+' AM');
+         console.log("Date",Date.now());
         this.fetchingTransactionsComplete=true;
       });
     }else{
@@ -51,6 +52,11 @@ export class LCDetailsPage implements OnInit {
   }
   createNewLC(){
     console.log('NOW',this.letterOfCredit);
+    // this.restapi.putLCDetails(this.letterOfCredit).then(res=>{
+    //   console.log(res); 
+    this.restapi.putLCDetails(this.letterOfCredit).subscribe(res=>{
+      console.log(res);
+    })
   }
   logout()
   {
