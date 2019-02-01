@@ -6,4 +6,6 @@ export const eb='EB';
 export const token_exporter='exporter' ;
 export const token_issuing='issuing_bank' ;
 export const token_beneficiary='beneficiary_bank' ;
+export const reject='REJECT';
+export const approve='APPROVE'
 //export const mapper =[{'alice':'importer'},{'bob':'exporter'},{'matias':'issuing_bank'},{'ella':'beneficiary_bank'}];

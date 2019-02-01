@@ -9,6 +9,7 @@ export class Customer {
     private bank:string;
     private type:string;
     private bankObj:Bank;
+    private className:string;
     constructor(obj:any,personId?: string,){
         if(obj!=undefined||null){
             if(obj["personId"]!=undefined||null)
@@ -25,8 +26,9 @@ export class Customer {
                 else
                     this.bank=obj["bank"];
             }
-
-            
+            if(obj["$class"]!=undefined||null){
+                this.className=obj["$class"];
+            }
         }
         if(personId!=undefined||null)
             this.personId=personId;

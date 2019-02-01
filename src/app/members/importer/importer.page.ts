@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { LetterOfCredit } from '../../shared/models/LetterOfCredit';
 import { SessionService } from '../../shared/providers/session.service';
 import {token_importer} from '../../shared/constant'
+import { NavController } from '@ionic/angular';
 
 
 @Component({
@@ -18,7 +19,7 @@ export class ImporterPage implements OnInit {
 
   private customerImporter:Customer;
   
-  constructor(private restapi:RestApiService,private authService:AuthenticationService,private sessionService:SessionService,private router: Router) { }
+  constructor(private restapi:RestApiService,private authService:AuthenticationService,private sessionService:SessionService,private router: Router,private navctrl:NavController) { }
   LCs=new Array<LetterOfCredit>();
   
 
@@ -41,7 +42,7 @@ export class ImporterPage implements OnInit {
     this.restapi.getLCs().subscribe((resLCs:LetterOfCredit[])=>{
       for(var i = 0;i<resLCs.length;i++){
         this.LCs.push(new LetterOfCredit(resLCs[i]))
-      }        
+      }
     });
     
   }
@@ -55,8 +56,14 @@ export class ImporterPage implements OnInit {
     this.router.navigate(['members','accountDetails']);
   }
 
-  getLCDetails(letterId:string){
-    console.log('LOCCCCCC',letterId);
-    //this.router.navigate(['members','alice','letterID']);
+  getLCDetails(letterId:string)
+  {
+    console.log("LC",letterId);
+    //this.router.navigate(['members','lcdetails/:',letterId]);
+    this.navctrl.navigateForward(['members','lcdetails',letterId]);
+  }
+
+  createLC(){
+    this.router.navigate(['members','createLC']);
   }
 }

@@ -11,7 +11,10 @@ export const routes: Routes = [
   { path: Roles.bob, loadChildren: './dashboard/exporter/exporter.module#ExporterPageModule' },
   { path: 'ben-bank', loadChildren: './dashboard/ben-bank/ben-bank.module#BenBankPageModule' },
   { path: 'iss-bank', loadChildren: './dashboard/iss-bank/iss-bank.module#IssBankPageModule' },
-  { path: 'accountDetails', loadChildren: './account-details/account-details.module#AccountDetailsPageModule' }
+  { path: 'accountDetails', loadChildren: './account-details/account-details.module#AccountDetailsPageModule' },
+  { path: 'lcdetails/:letterId', loadChildren: './lcdetails/lcdetails.module#LCDetailsPageModule' },
+  { path: 'createLC', loadChildren: './lcdetails/lcdetails.module#LCDetailsPageModule' }
+
 
 
 

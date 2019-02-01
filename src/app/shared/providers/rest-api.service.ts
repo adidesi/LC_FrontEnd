@@ -7,6 +7,7 @@ import { Customer } from '../models/Customer';
 import { Bank } from '../models/Bank';
 import { LetterOfCredit } from '../models/LetterOfCredit';
 import { ProductDetails } from '../models/ProductDetails';
+import { Transaction } from '../models/Transaction';
 const apiUrl = "http://192.168.0.102:3000/api/";
 @Injectable({
   providedIn: 'root'
@@ -37,4 +38,13 @@ export class RestApiService {
   updateCustomerDetails(): any {
     throw new Error("Method not implemented.");
   }
+  getApprovedTransactions()
+  {
+    return this.http.get<Transaction[]>(apiUrl+'Approve');
+  }
+  getRejectedTransactions()
+  {
+    return this.http.get<Transaction[]>(apiUrl+'Reject');
+  }
+
 }
