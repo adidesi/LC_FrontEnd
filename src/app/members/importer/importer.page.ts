@@ -39,13 +39,9 @@ export class ImporterPage implements OnInit {
       });
     });
     this.restapi.getLCs().subscribe((resLCs:LetterOfCredit[])=>{
-     console.log('a',resLCs.length);
       for(var i = 0;i<resLCs.length;i++){
         this.LCs.push(new LetterOfCredit(resLCs[i]))
-        console.log("LC",this.LCs[i]);
-      }
-      console.log("LC length",this.LCs.length);
-        
+      }        
     });
     
   }
@@ -57,5 +53,10 @@ export class ImporterPage implements OnInit {
   showAccountDetails()
   {
     this.router.navigate(['members','accountDetails']);
+  }
+
+  getLCDetails(letterId:string){
+    console.log('LOCCCCCC',letterId);
+    //this.router.navigate(['members','alice','letterID']);
   }
 }

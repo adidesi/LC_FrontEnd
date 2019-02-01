@@ -32,7 +32,7 @@
      <ion-card>
         <ion-virtual-scroll [items]="LCs" >
               <ion-item *virtualItem="let LC">
-                  <ion-card style="width: -webkit-fill-available">
+                  <ion-card style="width: -webkit-fill-available" (click)='getLCDetails(LC.letterId)'>
                     <ion-card-header>
                       <ion-grid>
                         <ion-row>
