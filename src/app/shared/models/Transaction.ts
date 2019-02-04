@@ -1,4 +1,4 @@
-import { Timestamp } from "../../../../node_modules/rxjs";
+import { Timestamp } from "rxjs";
 import {reject,approve} from '../constant'
 
 export class Transaction {

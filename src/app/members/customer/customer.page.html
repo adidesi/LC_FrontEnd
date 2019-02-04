@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Importer</ion-title>
+    <ion-title>Customer</ion-title>
     <ion-buttons slot="end">
         <ion-button (click)="logout()">
           <ion-icon slot="icon-only" name="log-out"></ion-icon>
@@ -10,13 +10,12 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="dis_scroll" *ngIf ="customerImporter">
-
-  <img src="/assets/icon/banklogo_issuing.png" alt="logo" style="border: 1px black solid">
+<ion-content class="dis_scroll" *ngIf ="customer">
+  <img src="/assets/icon/{{customer.bankObj.name}}.png" alt="logo" style="border: 1px black solid" *ngIf ="customer.bankObj"/>
   <ion-card>
     <ion-card-header>
       <div class="row">
-          <div ><ion-card-subtitle class="my-label">Welcome, {{customerImporter.name}} </ion-card-subtitle></div>
+          <div ><ion-card-subtitle class="my-label">Welcome, {{customer.name}} </ion-card-subtitle></div>
           <div text-right><ion-button  fill="outline"shape="round" size="small" (click)="showAccountDetails()">Account Details</ion-button></div><br>
       </div>
       <div class="row">
@@ -41,9 +40,9 @@
                                     </ion-col>
                                     <ion-col>
                                         <ion-row><ion-card-subtitle style="font-size:0.9em;color: crimson;" text-right>{{LC.status}}</ion-card-subtitle></ion-row>
-                                        <ion-row><ion-card-subtitle class="refID" style="font-weight: bold;color:black;" text-center>{{LC.letterId}}</ion-card-subtitle><hr style="display: table-column;"></ion-row>
+                                        <ion-row><ion-card-subtitle class="refID" style="font-size:1.1em;font-weight: bold;color:black;" text-center>{{LC.letterId}}</ion-card-subtitle><hr style="display: table-column;"></ion-row>
                                         <ion-row><ion-card-subtitle text-center>Total Value</ion-card-subtitle></ion-row>
-                                        <ion-row><ion-card-subtitle class="refID" text-center>€ {{LC.productDetails_obj.pricePerUnit*LC.productDetails_obj.quantity}}</ion-card-subtitle></ion-row>
+                                        <ion-row><ion-card-subtitle class="refID" text-center>€ {{LC.productDetails.pricePerUnit*LC.productDetails.quantity}}</ion-card-subtitle></ion-row>
                                     </ion-col>
                                 </ion-row>
                           </ion-grid>
@@ -54,7 +53,7 @@
       </ion-card>
   </div>
 </ion-content>   
-  <ion-fab vertical="bottom" horizontal="center" slot="fixed">
+  <ion-fab vertical="bottom" horizontal="center" slot="fixed" *ngIf ="isImporter">
         <ion-fab-button color="dark">
           <ion-icon name="add"></ion-icon>
         </ion-fab-button>

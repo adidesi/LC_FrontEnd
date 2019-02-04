@@ -10,7 +10,7 @@
 </ion-header>
 
 <ion-content *ngIf="customer">
-    <img src="/assets/icon/banklogo_issuing.png" alt="logo" style="border: 1px black solid;">
+<img src="/assets/icon/{{customer.bankObj.name}}.png" alt="logo" style="border: 1px black solid" *ngIf ="customer.bankObj"/>
 <ion-card>
       <ion-card-content>
           <div color="dark" style="font-size: xx-small" text-center><ion-label>ACCOUNT DETAILS</ion-label></div><br>

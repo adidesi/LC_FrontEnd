@@ -46,8 +46,20 @@ export class RestApiService {
   {
     return this.http.get<Transaction[]>(apiUrl+'Reject');
   }
-putLCDetails(data)
+putLCDetails(data:LetterOfCredit)
 {
-    return this.http.post<LetterOfCredit>(apiUrl+'/InitialApplication', JSON.stringify(data));
+  console.log("DATA IN REST",JSON.stringify(data));
+    let result = JSON.parse(JSON.stringify(data));
+    if(result['approval']!=undefined||null)
+        delete result['approval'];
+    if(result['issuingBank']!=undefined||null)
+        delete result['issuingBank'];
+    if(result['exportingBank']!=undefined||null)
+        delete result['exportingBank'];
+    if(result['status']!=undefined||null)
+        delete result['status'];
+    if(result['transactionId']!=undefined||null)
+        delete result['transactionId'];
+    return this.http.post(apiUrl+'InitialApplication', result);
 }
 }

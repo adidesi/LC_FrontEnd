@@ -6,43 +6,54 @@ import { Bank } from '../../shared/models/Bank';
 import { Router } from '@angular/router';
 import { LetterOfCredit } from '../../shared/models/LetterOfCredit';
 import { SessionService } from '../../shared/providers/session.service';
-import {token_importer} from '../../shared/constant'
+import {token_importer, token_exporter} from '../../shared/constant'
 import { NavController } from '@ionic/angular';
 
 
 @Component({
-  selector: 'app-importer',
-  templateUrl: './importer.page.html',
-  styleUrls: ['./importer.page.scss'],
+  selector: 'app-customer',
+  templateUrl: './customer.page.html',
+  styleUrls: ['./customer.page.scss'],
 })
-export class ImporterPage implements OnInit {
+export class CustomerPage implements OnInit {
 
-  private customerImporter:Customer;
+  private customer:Customer;
+  private isImporter:boolean=false;
   
   constructor(private restapi:RestApiService,private authService:AuthenticationService,private sessionService:SessionService,private router: Router,private navctrl:NavController) { }
-  LCs=new Array<LetterOfCredit>();
+  LCs:LetterOfCredit[]=[];
   
 
   ngOnInit() {
-    console.log("LCs=",this.LCs.length);
     this.authService.checkToken().then(res=>{
       this.authService.tokenState.subscribe(result=>{
-        this.customerImporter = null;
+        this.customer = null;
         this.restapi.getCustomer(result).subscribe((res:Customer)=>{
-         this.customerImporter = new Customer(res);
-          this.restapi.getBank(this.customerImporter.getBank()).subscribe((resBank:Bank)=>{
-            this.customerImporter.setBankObj(new Bank(resBank,'BKDOIT60','IT60 9876 5321 9090'));
-            this.customerImporter.setType(token_importer);
-            this.sessionService.storeCustomer(this.customerImporter);
-            this.sessionService.storeBank(this.customerImporter.getBankObj());
+         this.customer = new Customer(res);
+          this.restapi.getBank(this.customer.getBank()).subscribe((resBank:Bank)=>{
+            if(resBank["name"]==="Bank of Dinero"){
+              this.customer.setBankObj(new Bank(resBank,'BKDOIT60','IT60 9876 5321 9090'));
+              this.customer.setIsImporter(true);
+              this.isImporter=true;
+              this.sessionService.storeCustomer(this.customer);
+              this.sessionService.storeBank(this.customer.getBankObj());
+            }
+            else{
+                this.customer.setBankObj(new Bank(resBank,'EWBKUS22','US22 1234 5678 0101'));
+                this.customer.setIsImporter(false);
+                this.sessionService.storeCustomer(this.customer);
+                this.sessionService.storeBank(this.customer.getBankObj());
+            }
           });
         });
       });
     });
     this.restapi.getLCs().subscribe((resLCs:LetterOfCredit[])=>{
-      for(var i = 0;i<resLCs.length;i++){
+      for(var i = 0;i < resLCs.length; i++){
         this.LCs.push(new LetterOfCredit(resLCs[i]))
       }
+      console.log("LCs=",this.LCs.length);
+      console.log(this.LCs)
     });
     
   }

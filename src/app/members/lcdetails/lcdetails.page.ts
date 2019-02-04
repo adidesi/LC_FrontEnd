@@ -7,6 +7,7 @@ import { Transaction } from '../../shared/models/Transaction';
 import {approve,reject} from '../../shared/constant'
 import { SessionService } from '../../shared/providers/session.service';
 import { Customer } from '../../shared/models/Customer';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-lcdetails',
@@ -20,10 +21,12 @@ export class LCDetailsPage implements OnInit {
   private fetchingTransactionsComplete:boolean=false;
   private createLC:boolean;
 
-  constructor(private restapi:RestApiService,private sessionService:SessionService,private router:ActivatedRoute,private authService:AuthenticationService) { }
+  constructor(private restapi:RestApiService,private sessionService:SessionService,private activatedroute:ActivatedRoute,
+    private authService:AuthenticationService,public toastController: ToastController,private router:Router
+    ) { }
 
   ngOnInit() {
-    this.createLC=(this.router.snapshot.paramMap.get('letterId')!=null||''||undefined)?false:true;
+    this.createLC=(this.activatedroute.snapshot.paramMap.get('letterId')!=null||''||undefined)?false:true;
     if(this.createLC){
       this.sessionService.loadCustomer().then((resMe:Customer)=>{
         this.letterOfCredit=new LetterOfCredit({applicant:'x#alice',beneficiary:'x#bob'},'L'+Date.now().toString()+' AM');
@@ -31,7 +34,7 @@ export class LCDetailsPage implements OnInit {
         this.fetchingTransactionsComplete=true;
       });
     }else{
-      this.restapi.getLC(this.router.snapshot.paramMap.get('letterId')).subscribe(LCDetailResult=>{
+      this.restapi.getLC(this.activatedroute.snapshot.paramMap.get('letterId')).subscribe(LCDetailResult=>{
         this.letterOfCredit=new LetterOfCredit(LCDetailResult);
         this.loc=this.letterOfCredit.getLetterId().toString().replace(' ','%20');
         this.restapi.getApprovedTransactions().subscribe(approvedDetails=>{
@@ -51,16 +54,25 @@ export class LCDetailsPage implements OnInit {
   }
   }
   createNewLC(){
-    console.log('NOW',this.letterOfCredit);
-    // this.restapi.putLCDetails(this.letterOfCredit).then(res=>{
-    //   console.log(res); 
     this.restapi.putLCDetails(this.letterOfCredit).subscribe(res=>{
-      console.log(res);
-    })
+        this.sessionService.loadCustomer().then(cusRes=>{
+          this.showTransactionToast(res["transactionId"]);
+          this.router.navigate(['members',cusRes["personId"]]);
+        });      
+    });
   }
   logout()
   {
     this.authService.logout();
+  }
+  async showTransactionToast(data:string){
+    const toast = await this.toastController.create({
+      message: 'Transaction Success. Id :'+data,
+      showCloseButton: false,
+      position: 'bottom',
+      duration: 5000
+    });
+    toast.present();
   }
 
 }

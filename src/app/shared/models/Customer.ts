@@ -7,7 +7,7 @@ export class Customer {
     private lastName: string;
     private name: string;
     private bank:string;
-    private type:string;
+    private isImporter:boolean;
     private bankObj:Bank;
     private className:string;
     constructor(obj:any,personId?: string,){
@@ -48,8 +48,8 @@ export class Customer {
     setName(name: string) {
         this.name = name;
     }
-    setType(type:string){
-        this.type = type;
+    setIsImporter(isImporter:boolean){
+        this.isImporter = isImporter;
     }
     getPersonId() {
         return this.personId;
@@ -68,5 +68,9 @@ export class Customer {
     }
     getName() {
         return this.name;
+    }
+    getIsImporter()
+    {
+        return this.isImporter;
     }
 }

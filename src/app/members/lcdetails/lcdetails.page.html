@@ -10,7 +10,7 @@
 </ion-header>
 
 <ion-content *ngIf="fetchingTransactionsComplete">
-    <img src="/assets/icon/banklogo_issuing.png" alt="logo" style="border: 1px black solid">
+    <img src="/assets/icon/{{customer.bankObj.name}}.png" alt="logo" style="border: 1px black solid" *ngIf ="customer.bankObj"/>
     <ion-card>
         <ion-card-header>
             <ion-card-title>{{letterOfCredit.letterId}}</ion-card-title>
@@ -34,19 +34,19 @@
             <ion-list class="no-padding">
                 <ion-item>
                     <ion-label color="dark" class="no-padding label_size"><p>Type: </p></ion-label>
-                    <ion-input [(ngModel)]="letterOfCredit.productDetails_obj.productType" placeholder='Product Type' readonly={{!createLC}}></ion-input>         
+                    <ion-input [(ngModel)]="letterOfCredit.productDetails.productType" placeholder='Product Type' readonly={{!createLC}}></ion-input>         
                 </ion-item>
                 <ion-item>
                     <ion-label color="dark" class="no-padding label_size"><p>Quantity: </p></ion-label>
-                    <ion-input [(ngModel)]="letterOfCredit.productDetails_obj.quantity" placeholder='Quantity' readonly={{!createLC}}></ion-input>
+                    <ion-input [(ngModel)]="letterOfCredit.productDetails.quantity" placeholder='Quantity' readonly={{!createLC}}></ion-input>
                 </ion-item>
                 <ion-item>
                     <ion-label color="dark" class="no-padding label_size"><p>Price Per Unit: € </p></ion-label>
-                    <ion-input [(ngModel)]="letterOfCredit.productDetails_obj.pricePerUnit" placeholder='Price per Unit' readonly={{!createLC}}></ion-input>
+                    <ion-input [(ngModel)]="letterOfCredit.productDetails.pricePerUnit" placeholder='Price per Unit' readonly={{!createLC}}></ion-input>
                 </ion-item>
                 <ion-item>
                     <ion-label color="dark" class="no-padding label_size"><p>TOTAL: € </p></ion-label>
-                    <ion-input value={{letterOfCredit.productDetails_obj.quantity*letterOfCredit.productDetails_obj.pricePerUnit}} placeholder='Total Price' readonly></ion-input>
+                    <ion-input value={{letterOfCredit.productDetails.quantity*letterOfCredit.productDetails.pricePerUnit}} placeholder='Total Price' readonly></ion-input>
                 </ion-item> 
             </ion-list>
         </ion-card>

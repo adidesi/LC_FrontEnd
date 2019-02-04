@@ -7,9 +7,10 @@ export class LetterOfCredit {
     private issuingBank: string;
     private exportingBank: string;
     private status:string;
-    private productDetails_obj:ProductDetails;
+    private productDetails:ProductDetails;
     private approval=[];
     private rules=[];
+    private transactionId:string;
     constructor(obj?:any,letterId?: string,){
         if(obj!=undefined||null){
             this.letterId=(obj["letterId"]!=undefined||null)?obj["letterId"]:''
@@ -18,7 +19,8 @@ export class LetterOfCredit {
             this.issuingBank=(obj["issuingBank"]!=undefined||null)?obj["issuingBank"].split('#')[1]:'';
             this.exportingBank=(obj["exportingBank"]!=undefined||null)?obj["exportingBank"].split('#')[1]:'';
             this.status=(obj["status"]!=undefined||null)?obj["status"]:'';
-            this.productDetails_obj=(obj["productDetails"]!=undefined||null)?new ProductDetails(obj["productDetails"]):new ProductDetails();
+            this.productDetails=(obj["productDetails"]!=undefined||null)?new ProductDetails(obj["productDetails"]):new ProductDetails();
+            this.transactionId=(obj["transactionId"]!=undefined||null)?obj["transactionId"]:'';
             if(obj["approval"]!=undefined||null){
                     for(var i=0;i<obj["approval"].length;i++){
                         this.approval.push(obj["approval"][i]);
@@ -40,7 +42,8 @@ export class LetterOfCredit {
             this.issuingBank= '';
             this.exportingBank= '';
             this.status='';
-            this.productDetails_obj = new ProductDetails();
+            this.transactionId='';
+            this.productDetails = new ProductDetails();
             this.approval=[];
             this.rules=new Array();
         }
@@ -63,8 +66,11 @@ export class LetterOfCredit {
     setExportingBank(exportingBank: string) {
         this.exportingBank = exportingBank;
     }
-    setProdObj(productDetails_obj:ProductDetails){
-        this.productDetails_obj = productDetails_obj;
+    setProdObj(productDetails:ProductDetails){
+        this.productDetails = productDetails;
+    }
+    setTransactionId(transactionId:string){
+        this.transactionId = transactionId;
     }
     getLetterId() {
         return this.letterId;
@@ -85,6 +91,11 @@ export class LetterOfCredit {
         return this.issuingBank;
     }
     getProdObj(){
-        return this.productDetails_obj;
+        return this.productDetails;
     }
+    getTransactionId(){
+        return this.transactionId;
+    }
+
+    
 }
