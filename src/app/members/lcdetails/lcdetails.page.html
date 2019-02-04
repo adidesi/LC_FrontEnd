@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar *ngIf="fetchingTransactionsComplete"  color="dark">
-    <ion-title>LC Details {{letterOfCredit.letterId}}</ion-title>
+    <ion-title>{{letterOfCredit.letterId}}</ion-title>
     <ion-buttons slot="end">
             <ion-button (click)="logout()">
               <ion-icon slot="icon-only" name="log-out"></ion-icon>
