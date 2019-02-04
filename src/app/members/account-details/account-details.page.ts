@@ -33,15 +33,7 @@ export class AccountDetailsPage implements OnInit {
     });    
   }
   toggleEditOrSave() {
-    if(!this.allowEdit){//Save Button is Clicked. And We have to Save the Bank Details
-      //this.restApi.updateCustomerDetails();
-      console.log('data saved');
-    } 
-    console.log('before',this.allowEdit);
     this.allowEdit=(this.allowEdit)?false:true;
-    console.log('after',this.allowEdit);
-    
-          
   }
   logout()
   {

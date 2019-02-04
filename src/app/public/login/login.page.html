@@ -1,17 +1,40 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>login</ion-title>
+  <ion-toolbar color="dark">
+    <ion-title>Welcome to M.A.R.T</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding text-center>
+<ion-content padding text-center class="blackbackground">
 
-<img src="/assets/icon/Logo_TV_2015.svg.png" alt="image" height=width/><br>
-
-  <ion-button shape="round" color="secondary" (click)="login('alice')">Importer&nbsp;<img src="/assets/icon/import_new.png"/></ion-button><br>
-  <ion-button shape="round" color="secondary" (click)="login('bob')">Exporter&nbsp;<img src="/assets/icon/export_new.png"/></ion-button><br>
-  <ion-button shape="round" color="secondary" (click)="login('issuing_bank')">Issuing Bank&nbsp;<img src="/assets/icon/issuing.png"/></ion-button><br>
-  <ion-button shape="round" color="secondary" (click)="login('beneficiary_bank')">Beneficiary Bank&nbsp;<img src="/assets/icon/bank.png"/></ion-button>  
-
-<!-- <ion-button  expand="block" color="secondary">Login</ion-button> -->
+<img src="/assets/icon/MART.png" alt="image" style="height:50%"/><br>
+<ion-grid>
+    <ion-row>
+        <ion-col size="6">
+          <ion-button expand=block shape="round" color="bankgreen" (click)="login('alice')">Importer&nbsp;<img src="/assets/icon/import_new.png"/></ion-button><br>
+        </ion-col>  
+        <ion-col size="6">
+          <ion-button expand=block shape="round" color="bankgreen" (click)="login('bob')">Exporter&nbsp;<img src="/assets/icon/export_new.png"/></ion-button><br>
+        </ion-col>  
+    </ion-row>
+    <ion-row>
+      <ion-col size="6">
+          <ion-button expand=block shape="round" color="bankgreen" (click)="login('issuing_bank')">Issuing Bank&nbsp;<img src="/assets/icon/issuing.png"/></ion-button><br>
+      </ion-col>  
+      <ion-col size="6">
+        <ion-button expand=block shape="round" color="bankgreen" (click)="login('beneficiary_bank')">Beneficiary Bank&nbsp;<img src="/assets/icon/bank.png"/></ion-button>
+      </ion-col>  
+    </ion-row>
+</ion-grid>
 </ion-content>
+<ion-toolbar color="dark">
+    <ion-buttons slot="secondary">
+        <ion-button>
+        <ion-icon slot="icon-only" name="help-circle"></ion-icon>
+        </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="primary">
+        <ion-button>
+        <ion-icon slot="icon-only" name="information-circle-outline"></ion-icon>
+        </ion-button>
+    </ion-buttons>
+</ion-toolbar>

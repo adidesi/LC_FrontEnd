@@ -20,6 +20,7 @@ export class LCDetailsPage implements OnInit {
   private transactions=new Array<Transaction>();
   private fetchingTransactionsComplete:boolean=false;
   private createLC:boolean;
+  private customer:Customer;
 
   constructor(private restapi:RestApiService,private sessionService:SessionService,private activatedroute:ActivatedRoute,
     private authService:AuthenticationService,public toastController: ToastController,private router:Router
@@ -27,12 +28,11 @@ export class LCDetailsPage implements OnInit {
 
   ngOnInit() {
     this.createLC=(this.activatedroute.snapshot.paramMap.get('letterId')!=null||''||undefined)?false:true;
+    this.sessionService.loadCustomer().then((resCust:Customer)=>{
     if(this.createLC){
-      this.sessionService.loadCustomer().then((resMe:Customer)=>{
         this.letterOfCredit=new LetterOfCredit({applicant:'x#alice',beneficiary:'x#bob'},'L'+Date.now().toString()+' AM');
-         console.log("Date",Date.now());
+        this.customer=resCust;
         this.fetchingTransactionsComplete=true;
-      });
     }else{
       this.restapi.getLC(this.activatedroute.snapshot.paramMap.get('letterId')).subscribe(LCDetailResult=>{
         this.letterOfCredit=new LetterOfCredit(LCDetailResult);
@@ -48,17 +48,17 @@ export class LCDetailsPage implements OnInit {
                 this.transactions.push(new Transaction(rejectedDetails[i],reject));
             }
           });
+          this.customer=resCust;
           this.fetchingTransactionsComplete=true;
         });
       });
-  }
+    }
+  });
   }
   createNewLC(){
     this.restapi.putLCDetails(this.letterOfCredit).subscribe(res=>{
-        this.sessionService.loadCustomer().then(cusRes=>{
           this.showTransactionToast(res["transactionId"]);
-          this.router.navigate(['members',cusRes["personId"]]);
-        });      
+          this.router.navigate(['members', this.customer.getPersonId()]);
     });
   }
   logout()

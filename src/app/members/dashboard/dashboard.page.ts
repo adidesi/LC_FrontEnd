@@ -12,9 +12,7 @@ export class DashboardPage implements OnInit {
   constructor(private authService:AuthenticationService) { }
 
   ngOnInit() {
-    //console.log('TOKEN',this.authService.checkToken());
     this.authService.tokenState.subscribe(str => {this.tokenValue = str;});
-    //console.log('VALUE',this.tokenValue);
   }
   logout()
   {

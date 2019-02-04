@@ -74,4 +74,20 @@
   --ion-color-light-contrast-rgb: 0, 0, 0;
   --ion-color-light-shade: #d7d8da;
   --ion-color-light-tint: #f5f6f9;
+
+  /** bankgreen **/
+    --ion-color-bankgreen: #009846;
+    --ion-color-bankgreen-rgb: 0,152,70;
+    --ion-color-bankgreen-contrast: black;
+    --ion-color-bankgreen-contrast-rgb: 0, 0, 0;
+    --ion-color-bankgreen-shade: #0bb8cc;
+    --ion-color-bankgreen-tint: #24d6ea;
+}
+.ion-color-bankgreen{
+    --ion-color-base: var(--ion-color-bankgreen) ;
+    --ion-color-base-rgb: var(--ion-color-bankgreen-rgb) ;
+    --ion-color-contrast: var(--ion-color-bankgreen-contrast) ;
+    --ion-color-contrast-rgb: var(--ion-color-bankgreen-contrast-rgb) ;
+    --ion-color-shade: var(--ion-color-bankgreen-shade) ;
+    --ion-color-tint: var(--ion-color-bankgreen-tint) ;
 }

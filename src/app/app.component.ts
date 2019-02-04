@@ -29,11 +29,9 @@ export class AppComponent {
       this.splashScreen.hide();
 
       this.authService.authenticationState.subscribe(state=>{
-        console.log('Auth State',state);
         if(state)
         {
           this.authService.tokenState.subscribe(customer=>{
-            console.log('Token State', customer)
             this.router.navigate(['members',customer]);
           });
         }else{

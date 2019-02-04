@@ -48,7 +48,6 @@ export class RestApiService {
   }
 putLCDetails(data:LetterOfCredit)
 {
-  console.log("DATA IN REST",JSON.stringify(data));
     let result = JSON.parse(JSON.stringify(data));
     if(result['approval']!=undefined||null)
         delete result['approval'];

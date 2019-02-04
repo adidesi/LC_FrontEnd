@@ -52,8 +52,6 @@ export class CustomerPage implements OnInit {
       for(var i = 0;i < resLCs.length; i++){
         this.LCs.push(new LetterOfCredit(resLCs[i]))
       }
-      console.log("LCs=",this.LCs.length);
-      console.log(this.LCs)
     });
     
   }
@@ -69,8 +67,6 @@ export class CustomerPage implements OnInit {
 
   getLCDetails(letterId:string)
   {
-    console.log("LC",letterId);
-    //this.router.navigate(['members','lcdetails/:',letterId]);
     this.navctrl.navigateForward(['members','lcdetails',letterId]);
   }
 
