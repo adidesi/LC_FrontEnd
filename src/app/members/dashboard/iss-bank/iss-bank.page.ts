@@ -28,6 +28,7 @@ export class IssBankPage implements OnInit {
     ) { }
 
   ngOnInit() {
+    
   }
   createNewLC(){
     this.restapi.putLCDetails(this.letterOfCredit).subscribe(res=>{
