@@ -30,7 +30,7 @@ export class IssBankPage implements OnInit {
   ngOnInit() {
   }
   createNewLC(){
-    this.restapi.putLCDetails(this.letterOfCredit).subscribe(res=>{
+    this.restapi.postLCDetails(this.letterOfCredit).subscribe(res=>{
           this.showTransactionToast(res["transactionId"]);
           this.router.navigate(['members', this.customer.getPersonId()]);
     });

@@ -56,9 +56,9 @@ export class LCDetailsPage implements OnInit {
   });
   }
   createNewLC(){
-    this.restapi.putLCDetails(this.letterOfCredit).subscribe(res=>{
-          this.showTransactionToast(res["transactionId"]);
-          this.router.navigate(['members', this.customer.getPersonId()]);
+    this.restapi.postLCDetails(this.letterOfCredit).subscribe(res=>{
+      this.showTransactionToast(res["transactionId"]);
+      this.router.navigate(['members', this.customer.getPersonId()]);
     });
   }
   logout()
