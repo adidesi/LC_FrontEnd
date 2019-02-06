@@ -1,7 +1,6 @@
-import { StringifyOptions } from "querystring";
 import { Bank } from "./Bank";
 
-export class Customer {
+export class BankEmployee {
     private personId: string;
     private name: string;
     private bank:string;

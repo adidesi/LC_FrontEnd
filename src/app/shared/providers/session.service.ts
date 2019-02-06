@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, observable } from 'rxjs';
 import {Storage} from '@ionic/storage';
-import { AuthenticationService } from './authentication.service';
 import { Customer } from '../models/Customer';
 import { Bank } from '../models/Bank';
+import { BankEmployee } from '../models/BankEmployee';
+import { AuthenticationService } from './authentication.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,17 +16,13 @@ export class SessionService {
   public CUSTOMER_KEY = "customer";
   public BANK_KEY ="bank";
 
-  constructor(private storage:Storage,private authService: AuthenticationService) {
-    this.authService.tokenState.subscribe(result=>{
-      if(result!=undefined||null)
-        this.tokenState = result.toString();
-    });
-  }
+  constructor(private storage:Storage) {
 
-  storeCustomer(customer:Customer){
+  }
+  storeUser(customer){
     return this.storage.set(this.CUSTOMER_KEY,customer);
   }
-  loadCustomer(){
+  loadUser(){
     return this.storage.get(this.CUSTOMER_KEY);
   }
   storeBank(bank:Bank){
@@ -34,5 +31,13 @@ export class SessionService {
   loadBank(){
     return this.storage.get(this.BANK_KEY);
   }
-
+  invalidateSession()
+  {
+    this.storage.remove(this.CUSTOMER_KEY);
+    this.storage.remove(this.BANK_KEY);
+    // this.tokenState.next('');
+   
+    
+    
+  }
 }

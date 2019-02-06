@@ -31,8 +31,9 @@ export class AppComponent {
       this.authService.authenticationState.subscribe(state=>{
         if(state)
         {
-          this.authService.tokenState.subscribe(customer=>{
-            this.router.navigate(['members',customer]);
+          this.sessionService.tokenState.subscribe(data=>{
+            console.log('ADITYA2',data)
+            this.router.navigate(['members',data]);
           });
         }else{
           this.router.navigate(['login']);

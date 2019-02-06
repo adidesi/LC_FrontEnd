@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthenticationService } from '../../shared/providers/authentication.service';
+import { AuthGaurdService } from '../../shared/services/authgaurd.service';
+import { SessionGaurdService } from '../../shared/services/session-gaurd.service';
 
 @Component({
   selector: 'app-login',
@@ -8,12 +9,14 @@ import { AuthenticationService } from '../../shared/providers/authentication.ser
 })
 export class LoginPage implements OnInit {
 
-  constructor(private authService:AuthenticationService) { }
+  constructor(private authGuardService:AuthGaurdService,private sessionGuardService:SessionGaurdService) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.sessionGuardService.loadToken().next('');
+  }
   
   login(param:string)
   {
-    this.authService.login(param);
+    this.authGuardService.login(param);
   }
 }

@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar *ngIf="fetchingTransactionsComplete"  color="dark">
-    <ion-title>{{letterOfCredit.letterId}}</ion-title>
+    <ion-title>LC Details</ion-title>
     <ion-buttons slot="end">
             <ion-button (click)="logout()">
               <ion-icon slot="icon-only" name="log-out"></ion-icon>
@@ -56,6 +56,21 @@
                 <ion-textarea value={{items}}></ion-textarea>
             </ion-item> 
         </ion-card>
+        <div *ngIf="bankEmployee">
+            <ion-grid>
+                <ion-row>
+                    <ion-col size="3"></ion-col>
+                    <ion-col size="3">
+                            <ion-button color="bankgreen">Accept</ion-button>
+                    </ion-col>
+                    <ion-col size="3">
+                            <ion-button color="bankgreen">Reject</ion-button>
+                    </ion-col>
+                    <ion-col size="3"></ion-col>
+                </ion-row>
+            </ion-grid>
+            
+        </div>
     </ion-card>
 
 </ion-content> 

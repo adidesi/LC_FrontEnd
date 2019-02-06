@@ -1,6 +1,6 @@
 <ion-header>
     <ion-toolbar  color="dark">
-      <ion-title>Customer</ion-title>
+      <ion-title>Bank</ion-title>
       <ion-buttons slot="end">
           <ion-button (click)="logout()">
             <ion-icon slot="icon-only" name="log-out"></ion-icon>
@@ -9,12 +9,11 @@
     </ion-toolbar>
   </ion-header>
   
-  <ion-content class="dis_scroll" *ngIf ="customer">
-    <img src="/assets/icon/{{customer.bankObj.name}}.png" alt="logo" style="border: 1px black solid" *ngIf ="customer.bankObj"/>
+  <ion-content class="dis_scroll" *ngIf ="bankEmployee">
+    <img src="/assets/icon/{{bankEmployee.bankObj.name}}.png" alt="logo" style="border: 1px black solid" *ngIf ="bankEmployee.bankObj"/>
     <ion-card>
       <ion-card-header id="detailsCard">
-        <div ><ion-card-subtitle class="my-label">Welcome, {{customer.name}} </ion-card-subtitle></div>
-        <div text-right><ion-button  fill="outline"shape="round" size="small" (click)="showAccountDetails()">Account Details</ion-button></div><br>
+        <div ><ion-card-subtitle class="my-label">Welcome, {{bankEmployee.name}} </ion-card-subtitle></div>
     </ion-card-header>
     </ion-card>
     <div class="my-label_1" text-center>LC List</div>

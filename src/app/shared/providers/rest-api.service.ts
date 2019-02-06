@@ -6,6 +6,7 @@ import { Bank } from '../models/Bank';
 import { LetterOfCredit } from '../models/LetterOfCredit';
 import { ProductDetails } from '../models/ProductDetails';
 import { Transaction } from '../models/Transaction';
+import { BankEmployee } from '../models/BankEmployee';
 const apiUrl = "http://192.168.0.102:3000/api/";
 @Injectable({
   providedIn: 'root'
@@ -15,8 +16,8 @@ export class RestApiService {
   getCustomer(id:string){
     return this.http.get<Customer>(apiUrl+'Customer/'+id);
   }
-  getBankEmployee(id:string){
-    return this.http.get<BankEmployee>(apiUrl+'BankEmployee/'+id);
+  getBankEmployee(empid:string){
+    return this.http.get<BankEmployee>(apiUrl+'BankEmployee/'+empid);
   }
   getBank(bankId:string)
   {

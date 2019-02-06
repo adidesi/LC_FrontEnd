@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { RestApiService } from '../../shared/providers/rest-api.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { LetterOfCredit } from '../../shared/models/LetterOfCredit';
-import { AuthenticationService } from '../../shared/providers/authentication.service';
 import { Transaction } from '../../shared/models/Transaction';
-import {approve,reject} from '../../shared/constant'
+import {approve,reject,matias,ella} from '../../shared/constant'
 import { SessionService } from '../../shared/providers/session.service';
 import { Customer } from '../../shared/models/Customer';
 import { ToastController } from '@ionic/angular';
+import { AuthGaurdService } from '../../shared/services/authgaurd.service';
 
 @Component({
   selector: 'app-lcdetails',
@@ -21,14 +21,16 @@ export class LCDetailsPage implements OnInit {
   private fetchingTransactionsComplete:boolean=false;
   private createLC:boolean;
   private customer:Customer;
+  private bankEmployee:boolean;
 
   constructor(private restapi:RestApiService,private sessionService:SessionService,private activatedroute:ActivatedRoute,
-    private authService:AuthenticationService,public toastController: ToastController,private router:Router
+    private authGuardService:AuthGaurdService,public toastController: ToastController,private router:Router
     ) { }
 
   ngOnInit() {
     this.createLC=(this.activatedroute.snapshot.paramMap.get('letterId')!=null||''||undefined)?false:true;
-    this.sessionService.loadCustomer().then((resCust:Customer)=>{
+    this.sessionService.loadUser().then((resCust)=>{
+    this.bankEmployee=(resCust['personId']===matias||resCust['personId']===ella)?true:false;
     if(this.createLC){
         this.letterOfCredit=new LetterOfCredit({applicant:'x#alice',beneficiary:'x#bob'},'L'+Date.now().toString()+' AM');
         this.customer=resCust;
@@ -63,7 +65,7 @@ export class LCDetailsPage implements OnInit {
   }
   logout()
   {
-    this.authService.logout();
+    this.authGuardService.logout();
   }
   async showTransactionToast(data:string){
     const toast = await this.toastController.create({
