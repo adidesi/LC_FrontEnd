@@ -1,24 +1,30 @@
 <ion-header>
-  <ion-toolbar  color="dark">
+  <ion-toolbar color="dark">
     <ion-title>Customer</ion-title>
     <ion-buttons slot="end">
-        <ion-button (click)="logout()">
-          <ion-icon slot="icon-only" name="log-out"></ion-icon>
-        </ion-button>
-      </ion-buttons>
+      <ion-button (click)="logout()">
+        <ion-icon slot="icon-only" name="log-out"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="dis_scroll" *ngIf ="customer">
-  <img src="/assets/icon/{{customer.bankObj.name}}.png" alt="logo" style="border: 1px black solid" *ngIf ="customer.bankObj"/>
+<ion-content class="dis_scroll" *ngIf="customer">
+  <img src="/assets/icon/{{customer.bankObj.name}}.png" alt="logo" class="bankLogo" *ngIf="customer.bankObj"
+  />
   <ion-card>
     <ion-card-header id="detailsCard">
       <div class="row">
-          <div ><ion-card-subtitle class="my-label">Welcome, {{customer.name}} </ion-card-subtitle></div>
-          <div text-right><ion-button  fill="outline"shape="round" size="small" color="bankgreen" (click)="showAccountDetails()">Account Details</ion-button></div><br>
+        <div>
+          <ion-card-subtitle class="my-label">Welcome, {{customer.name}} </ion-card-subtitle>
+        </div>
+        <div text-right>
+          <ion-button fill="outline" shape="round" size="small" color="bankgreen" (click)="showAccountDetails()">Account Details</ion-button>
+        </div>
+        <br>
       </div>
       <div class="row">
-        <div  text-center>
+        <div text-center>
           <ion-label>Account Balance</ion-label>
         </div>
       </div>
@@ -27,32 +33,40 @@
   </ion-card>
   <div class="my-label_1" text-center>LC List</div>
   <div class="enable_scroll" id="LCsListCard">
-     <ion-card>
-        <ion-virtual-scroll [items]="LCs" >
-            <ion-item *virtualItem="let LC">
-                  <ion-card style="width: -webkit-fill-available" (click)="getLCDetails(LC.letterId)">
-                        <ion-card-header>
-                            <ion-grid>
-                                <ion-row>
-                                    <ion-col size="3">
-                                        <img src="/assets/icon/doc_LC.png">  
-                                    </ion-col>
-                                    <ion-col>
-                                        <ion-row><ion-card-subtitle style="font-size:0.9em;color: crimson;" text-right>{{LC.status}}</ion-card-subtitle></ion-row>
-                                        <ion-row><ion-card-subtitle class="refID" style="font-size:1.1em;font-weight: bold;color:black;" text-center>{{LC.letterId}}</ion-card-subtitle><hr style="display: table-column;"></ion-row>
-                                        <ion-row><ion-card-subtitle text-center>Total Value</ion-card-subtitle></ion-row>
-                                        <ion-row><ion-card-subtitle class="refID" text-center>€ {{LC.productDetails.pricePerUnit*LC.productDetails.quantity}}</ion-card-subtitle></ion-row>
-                                    </ion-col>
-                                </ion-row>
-                          </ion-grid>
-                      </ion-card-header>
-                  </ion-card>
-              </ion-item>  
-        </ion-virtual-scroll>
-      </ion-card>
+    <ion-card>
+      <ion-virtual-scroll [items]="LCs">
+        <ion-item *virtualItem="let LC">
+          <ion-card class="cardStyle" (click)="getLCDetails(LC.letterId)">
+            <ion-card-header>
+              <ion-grid>
+                <ion-row>
+                  <ion-col size="3">
+                    <img src="/assets/icon/doc_LC.png">
+                  </ion-col>
+                  <ion-col>
+                    <ion-row>
+                      <ion-card-subtitle class="subtitleStatus" text-right>{{LC.status}}</ion-card-subtitle>
+                    </ion-row>
+                    <ion-row>
+                      <ion-card-subtitle class="refID" text-center>{{LC.letterId}}</ion-card-subtitle>
+                    </ion-row>
+                    <ion-row>
+                      <ion-card-subtitle text-center>Total Value</ion-card-subtitle>
+                    </ion-row>
+                    <ion-row>
+                      <ion-card-subtitle class="refID" text-center>€ {{LC.productDetails.pricePerUnit*LC.productDetails.quantity}}</ion-card-subtitle>
+                    </ion-row>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-card-header>
+          </ion-card>
+        </ion-item>
+      </ion-virtual-scroll>
+    </ion-card>
   </div>
-</ion-content>   
-  <ion-fab vertical="bottom" horizontal="center" slot="fixed" *ngIf ="isImporter">
+</ion-content>
+<!-- <ion-fab vertical="bottom" horizontal="center" slot="fixed" *ngIf ="isImporter">
         <ion-fab-button color="dark">
           <ion-icon name="add"></ion-icon>
         </ion-fab-button>
@@ -61,19 +75,22 @@
             LC
           </ion-button>
         </ion-fab-list>
-  </ion-fab>
+  </ion-fab> -->
+<ion-label>
+  <div #processContainer></div>
+</ion-label>
 
 
- <ion-toolbar color="dark">
-    <ion-buttons slot="secondary">
-      <ion-button>
-        <ion-icon slot="icon-only" name="help-circle"></ion-icon>
-      </ion-button>
-      
-    </ion-buttons>
-    <ion-buttons slot="primary">
-      <ion-button>
-        <ion-icon slot="icon-only" name="information-circle-outline"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
+<ion-toolbar color="dark">
+  <ion-buttons slot="secondary">
+    <ion-button>
+      <ion-icon slot="icon-only" name="help-circle"></ion-icon>
+    </ion-button>
+
+  </ion-buttons>
+  <ion-buttons slot="primary">
+    <ion-button>
+      <ion-icon slot="icon-only" name="information-circle-outline"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+</ion-toolbar>

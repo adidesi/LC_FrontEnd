@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AuthGaurdService } from './shared/services/authgaurd.service';
+import { AuthGuardService } from './shared/services/authGuard.service';
 import { CanActivate } from '@angular/router/src/utils/preactivation';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', loadChildren: './public/login/login.module#LoginPageModule' },
-  { path: 'members', canActivate: [AuthGaurdService] ,loadChildren: './members/member-routing.module#MemberRoutingModule'}
+  { path: 'benbank', loadChildren: './members/dashboard/ben-bank/ben-bank.module#BenBankPageModule' },
+  { path: 'members', canActivate: [AuthGuardService], loadChildren: './members/member-routing.module#MemberRoutingModule' }
 ];
 
 @NgModule({

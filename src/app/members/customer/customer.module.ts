@@ -24,5 +24,5 @@ const routes: Routes = [
   declarations: [CustomerPage]
 })
 export class CustomerPageModule {
-  
+
 }

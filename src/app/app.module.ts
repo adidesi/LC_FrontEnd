@@ -11,9 +11,11 @@ import { AppRoutingModule } from './app-routing.module';
 import {IonicStorageModule} from '@ionic/storage';
 
 import { HttpClientModule } from '@angular/common/http';
+import { CreateButtonComponent } from './create-button/create-button.component';
+
 @NgModule({
-  declarations: [AppComponent],
-  entryComponents: [],
+  declarations: [AppComponent, CreateButtonComponent],
+  entryComponents: [CreateButtonComponent],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,IonicStorageModule.forRoot(), HttpClientModule,],
   providers: [
     StatusBar,

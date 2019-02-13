@@ -4,9 +4,9 @@ import * as Roles from '../shared/constant';
 
 export const routes: Routes = [
   { path: Roles.token_importer, loadChildren: './customer/customer.module#CustomerPageModule' },
-  { path: Roles.token_exporter ,loadChildren: './dashboard/dashboard.module#DashboardPageModule'},
-  { path: Roles.token_beneficiary ,loadChildren: './dashboard/dashboard.module#DashboardPageModule'},
-  { path: Roles.matias ,loadChildren: './dashboard/iss-bank/iss-bank.module#IssBankPageModule' },
+  { path: Roles.token_exporter, loadChildren: './dashboard/dashboard.module#DashboardPageModule' },
+  { path: Roles.token_beneficiary, loadChildren: './dashboard/dashboard.module#DashboardPageModule' },
+  { path: Roles.matias, loadChildren: './dashboard/iss-bank/iss-bank.module#IssBankPageModule' },
   { path: Roles.alice, loadChildren: './customer/customer.module#CustomerPageModule' },
   { path: Roles.bob, loadChildren: './customer/customer.module#CustomerPageModule' },
   { path: Roles.ella, loadChildren: './dashboard/iss-bank/iss-bank.module#IssBankPageModule' },

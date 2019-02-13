@@ -5,19 +5,19 @@ export class Bank {
     private name: string;
     private swiftCode: string;
     private IBAN: string;
-    constructor(obj?:any,swiftCode?:string, IBAN?: string,bankId?: string){
-        if(obj!=undefined||null){
-            if(obj["bankID"]!=undefined||null)
-                this.bankId=obj["bankID"];
-            if(obj["name"]!=undefined||null)
-                this.name=obj["name"];
+    constructor(obj?: any, swiftCode?: string, IBAN?: string, bankId?: string) {
+        if (obj != undefined || null) {
+            if (obj["bankID"] != undefined || null)
+                this.bankId = obj["bankID"];
+            if (obj["name"] != undefined || null)
+                this.name = obj["name"];
         }
-        if(bankId!=undefined||null)
-            this.bankId = bankId;  
-        if(swiftCode!=undefined||null)
+        if (bankId != undefined || null)
+            this.bankId = bankId;
+        if (swiftCode != undefined || null)
             this.swiftCode = swiftCode;
-        if(IBAN!=undefined||null)
-            this.IBAN = IBAN;  
+        if (IBAN != undefined || null)
+            this.IBAN = IBAN;
     };
     setName(name: string) {
         this.name = name;

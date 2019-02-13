@@ -1,66 +1,64 @@
 <ion-header>
-  <ion-toolbar  color="dark">
-    <ion-title>accountDetails</ion-title>
+  <ion-toolbar color="dark">
+    <ion-title>Account Details</ion-title>
     <ion-buttons slot="end">
-        <ion-button (click)="logout()">
-          <ion-icon slot="icon-only" name="log-out"></ion-icon>
-        </ion-button>
-      </ion-buttons>
+      <ion-button (click)="logout()">
+        <ion-icon slot="icon-only" name="log-out"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content *ngIf="customer">
-<img src="/assets/icon/{{customer.bankObj.name}}.png" alt="logo" style="border: 1px black solid" *ngIf ="customer.bankObj"/>
-<ion-card>
-      <ion-card-content>
-          <div color="dark" style="font-size: xx-small" text-center><ion-label>ACCOUNT DETAILS</ion-label></div><br>
-          <ion-label color="dark" class="label_size">Name:</ion-label>
-          <ion-item>
-              <ion-input id="inputTextDynamicDisabled1" [(ngModel)]=customer.name disabled={{allowEdit}} class="my-details"></ion-input>
-            </ion-item>
-          <ion-label color="dark" class="label_size">Company Name:</ion-label>
-          <ion-item>     
-              <ion-input id="inputTextDynamicDisabled2" [(ngModel)]=customer.companyName disabled={{allowEdit}} class="my-details"></ion-input>
-          </ion-item>
-          <ion-label color="dark" class="label_size">IBAN:</ion-label>
-          <ion-item>    
-              <ion-input  value={{customer.bankObj.IBAN}}  disabled class="my-details"></ion-input>
-            </ion-item>
-          <ion-label color="dark" class="label_size">Swift Code:</ion-label>
-          <ion-item>
-              <ion-input  value={{customer.bankObj.swiftCode}} disabled class="my-details"></ion-input>
-          </ion-item>
-          <ion-label color="dark" class="label_size">Bank Name:</ion-label>
-          <ion-item>
-              
-              <ion-input value={{customer.bankObj.name}} disabled class="my-details"></ion-input>
-            </ion-item>
-        </ion-card-content>
-</ion-card>
+  <img src="/assets/icon/{{customer.bankObj.name}}.png" alt="logo" class="bankLogo" id="imgBank" *ngIf="customer.bankObj" />
+  <ion-card>
+    <ion-card-content>
+      <div color="dark" class="acc_details_label" id="accLabel" text-center>
+        <ion-label>ACCOUNT DETAILS</ion-label>
+      </div>
+      <br>
+      <ion-label color="dark" id="accDetailsLabel1" class="label_size">Name:</ion-label>
+      <ion-item>
+        <ion-input id="inputTextDynamicDisabled1" [(ngModel)]=customer.name disabled={{allowEdit}} class="my-details"></ion-input>
+      </ion-item>
+      <ion-label color="dark" class="label_size" id="accDetailsLabel2">Company Name:</ion-label>
+      <ion-item>
+        <ion-input id="inputTextDynamicDisabled2" [(ngModel)]=customer.companyName disabled={{allowEdit}} class="my-details"></ion-input>
+      </ion-item>
+      <ion-label color="dark" class="label_size" id="accDetailsLabel3">IBAN:</ion-label>
+      <ion-item>
+        <ion-input value={{customer.bankObj.IBAN}} disabled class="my-details"></ion-input>
+      </ion-item>
+      <ion-label color="dark" class="label_size" id="accDetailsLabel4">Swift Code:</ion-label>
+      <ion-item>
+        <ion-input value={{customer.bankObj.swiftCode}} disabled class="my-details"></ion-input>
+      </ion-item>
+      <ion-label color="dark" class="label_size" id="accDetailsLabel5">Bank Name:</ion-label>
+      <ion-item>
+        <ion-input value={{customer.bankObj.name}} disabled class="my-details"></ion-input>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
-
 <ion-fab vertical="bottom" horizontal="center" id="editFAB" slot="fixed" class="fab" *ngIf="allowEdit">
-    <ion-fab-button (click)="toggleEditOrSave()" color="dark">
-      <ion-icon name="create"></ion-icon>
-    </ion-fab-button>
+  <ion-fab-button (click)="toggleEditOrSave()" color="dark">
+    <ion-icon name="create"></ion-icon>
+  </ion-fab-button>
 </ion-fab>
 <ion-fab vertical="bottom" horizontal="center" id="saveFAB" slot="fixed" class="fab1" *ngIf="!allowEdit">
-    <ion-fab-button (click)="toggleEditOrSave()" color="dark">
-      <ion-icon name="save"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
-
+  <ion-fab-button (click)="toggleEditOrSave()" color="dark">
+    <ion-icon name="save"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
 <ion-toolbar color="dark">
-<ion-buttons slot="secondary">
-  <ion-button>
-    <ion-icon slot="icon-only" name="help-circle"></ion-icon>
-  </ion-button>
-  
-</ion-buttons>
-<ion-buttons slot="primary">
-  <ion-button>
-    <ion-icon slot="icon-only" name="information-circle-outline"></ion-icon>
-  </ion-button>
-</ion-buttons>
-
+  <ion-buttons slot="secondary">
+    <ion-button>
+      <ion-icon slot="icon-only" name="help-circle"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+  <ion-buttons slot="primary">
+    <ion-button>
+      <ion-icon slot="icon-only" name="information-circle-outline"></ion-icon>
+    </ion-button>
+  </ion-buttons>
 </ion-toolbar>

@@ -9,8 +9,8 @@ import { Router } from '@angular/router';
 import { ToastController, NavController } from '@ionic/angular';
 import { BankEmployee } from '../../../shared/models/BankEmployee';
 import { Bank } from '../../../shared/models/Bank';
-import { AuthGaurdService } from '../../../shared/services/authgaurd.service';
-import { SessionGaurdService } from '../../../shared/services/session-gaurd.service';
+import { AuthGuardService } from '../../../shared/services/authGuard.service';
+import { SessionGuardService } from '../../../shared/services/session-Guard.service';
 
 @Component({
   selector: 'app-iss-bank',
@@ -25,9 +25,9 @@ export class IssBankPage implements OnInit {
   LCs:LetterOfCredit[]=[];
   items:any[]=[];
   private isIssuingBank:boolean=false;
-  constructor(private restapi:RestApiService,private sessionguardService:SessionGaurdService,
+  constructor(private restapi:RestApiService,private sessionguardService:SessionGuardService,
     private sessionService:SessionService,
-    private authGuardService:AuthGaurdService,public toastController: ToastController,private router:Router,
+    private authGuardService:AuthGuardService,public toastController: ToastController,private router:Router,
     private navCtrl: NavController
     ) { }
 

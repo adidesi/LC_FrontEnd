@@ -6,37 +6,37 @@ export class Customer {
     private companyName: string;
     private lastName: string;
     private name: string;
-    private bank:string;
-    private isImporter:boolean;
-    private bankObj:Bank;
-    private className:string;
-    constructor(obj:any,personId?: string,){
-        if(obj!=undefined||null){
-            if(obj["personId"]!=undefined||null)
-                this.personId=obj["personId"];
-            if(obj["companyName"]!=undefined||null)
-                this.companyName=obj["companyName"];
-            if(obj["lastName"]!=undefined||null)
-                this.lastName=obj["lastName"];
-            if(obj["name"]!=undefined||null)
-                this.name=obj["name"];
-            if(obj["bank"]!=undefined||null){
-                if(obj["bank"].toString().search('#')!=-1)
-                    this.bank=obj["bank"].split('#')[1];
+    private bank: string;
+    private isImporter: boolean;
+    private bankObj: Bank;
+    private className: string;
+    constructor(obj: any, personId?: string, ) {
+        if (obj != undefined || null) {
+            if (obj["personId"] != undefined || null)
+                this.personId = obj["personId"];
+            if (obj["companyName"] != undefined || null)
+                this.companyName = obj["companyName"];
+            if (obj["lastName"] != undefined || null)
+                this.lastName = obj["lastName"];
+            if (obj["name"] != undefined || null)
+                this.name = obj["name"];
+            if (obj["bank"] != undefined || null) {
+                if (obj["bank"].toString().search('#') != -1)
+                    this.bank = obj["bank"].split('#')[1];
                 else
-                    this.bank=obj["bank"];
+                    this.bank = obj["bank"];
             }
-            if(obj["$class"]!=undefined||null){
-                this.className=obj["$class"];
+            if (obj["$class"] != undefined || null) {
+                this.className = obj["$class"];
             }
         }
-        if(personId!=undefined||null)
-            this.personId=personId;
+        if (personId != undefined || null)
+            this.personId = personId;
     };
-    setBank(bank:string){
+    setBank(bank: string) {
         this.bank = bank;
     }
-    setBankObj(bankObj:Bank){
+    setBankObj(bankObj: Bank) {
         this.bankObj = bankObj;
     }
     setCompanyName(comapanyName: string) {
@@ -48,7 +48,7 @@ export class Customer {
     setName(name: string) {
         this.name = name;
     }
-    setIsImporter(isImporter:boolean){
+    setIsImporter(isImporter: boolean) {
         this.isImporter = isImporter;
     }
     getPersonId() {
@@ -57,7 +57,7 @@ export class Customer {
     getBank() {
         return this.bank;
     }
-    getBankObj(){
+    getBankObj() {
         return this.bankObj;
     }
     getCompanyName() {
@@ -69,8 +69,7 @@ export class Customer {
     getName() {
         return this.name;
     }
-    getIsImporter()
-    {
+    getIsImporter() {
         return this.isImporter;
     }
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthGaurdService } from '../../shared/services/authgaurd.service';
-import { SessionGaurdService } from '../../shared/services/session-gaurd.service';
+import { AuthGuardService } from '../../shared/services/authGuard.service';
+import { SessionGuardService } from '../../shared/services/session-Guard.service';
 
 @Component({
   selector: 'app-login',
@@ -9,7 +9,7 @@ import { SessionGaurdService } from '../../shared/services/session-gaurd.service
 })
 export class LoginPage implements OnInit {
 
-  constructor(private authGuardService:AuthGaurdService,private sessionGuardService:SessionGaurdService) { }
+  constructor(private authGuardService:AuthGuardService,private sessionGuardService:SessionGuardService) { }
 
   ngOnInit() {
     this.sessionGuardService.loadToken().next('');
