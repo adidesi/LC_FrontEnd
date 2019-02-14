@@ -5,9 +5,11 @@ import { mergeMap, switchMap, map } from 'rxjs/operators';
 import { Transaction } from '../models/Transaction';
 import { HttpClient } from '@angular/common/http';
 import { Bank } from '../models/Bank';
-import { APIURL } from '../constant';
+import { approve, reject, CREATE, APIURL, InitialApplicationClass } from '../constant';
 import { Customer } from '../models/Customer';
-import { SessionGuardService } from './session-gaurd.service';
+import { SessionGuardService } from './session-guard.service';
+import { BankEmployee } from '../models/BankEmployee';
+import { LetterOfCredit } from '../models/LetterOfCredit';
 
 @Injectable({
   providedIn: 'root'
@@ -16,88 +18,133 @@ export class RestGuardService {
 
   constructor(private restApiService: RestApiService, private http: HttpClient, private sessionGuardService: SessionGuardService) { }
 
-  status: {};
-  // getTransactionsForId(id:string):Observable<any>{
-  //   var observable1 =this.restApiService.getApprovedTransactions();
-  //   var observable2 = this.restApiService.getRejectedTransactions();
-  //   forkJoin([observable1,observable2]).subscribe(result=>{
-  //     console.log('R',result[1]);
-  //     this.status=result[0];
-  //     console.log('result[0]',result[0],'result[1]',result[1],'this.status',this.status);
-  //   })
-  //   // observable1.subscribe(data=>{
-  //   //   console.log('DATA', data);
-  //   // });
-  //   return ;
-  // }
-  getTransactionsForId(id: string): Observable<any> {
-    var observable1 = this.restApiService.getApprovedTransactions();
-    var observable2 = this.restApiService.getRejectedTransactions();
-
-    return forkJoin([observable1, observable2]);
+  getTransactions(): Observable<any> {
+    var initTnxObs = this.restApiService.getInitialApplicationTransactions();
+    var approveTnxObs = this.restApiService.getApprovedTransactions();
+    var rejectTnxObs = this.restApiService.getRejectedTransactions();
+    return forkJoin([initTnxObs, approveTnxObs, rejectTnxObs]);
   }
 
-  getCustomerDetails(id: string):any {
-    const customerObservable = new Observable(observer => {
-      observer.next(this.restApiService.getCustomer('alice'))
-      console.log(observer)
-      //return observer;
-    })
-    return customerObservable;
-  }
-
-  public getCustomerWithBank(id: string)
-  {
-    console.log('in getCustomerWithBank', id)
-     if(id !== null && id !== undefined)
-     {
-        return  this.http.get<Customer>(APIURL + 'Customer/' + id)
-        .pipe(
-          switchMap((response) => {
-          if(response)
-          {
-            console.log(response)
-            return this.http.get<Bank>(APIURL + 'Bank/' + response['bank'].split('#')[1])
-            .pipe(map(bank => {
-              
-              console.log(response,'in switch');
-              console.log(bank);
-              return bank
-            }));
+  getTransactionsForId(id: string) {
+    return this.getTransactions().pipe(
+      map(
+        resAllTnx => {
+          let urlId = id.replace(' ','%20');
+          let LCTnxforId: Transaction[] = [];
+          for (let i = 0; i < resAllTnx.length; i++) {
+            for (let j = 0; j < resAllTnx[i].length; j++) {
+              if (resAllTnx[i][j]['$class'].split('.')[3] == InitialApplicationClass)
+              {
+                if(resAllTnx[i][j]['letterId'] === id)
+                  LCTnxforId.push(new Transaction(resAllTnx[i][j], CREATE));
+              }
+              else if (resAllTnx[i][j]['loc'].split('#')[1] != null || undefined && resAllTnx[i][j]['loc'].split('#')[1] === urlId){
+                if (resAllTnx[i][j]['$class'].split('.')[3] == 'Approve')
+                  LCTnxforId.push(new Transaction(resAllTnx[i][j], approve));
+                else 
+                  LCTnxforId.push(new Transaction(resAllTnx[i][j], reject));
+              }
+            }
           }
-          else 
-          {
+          return LCTnxforId;
+        }
+      )
+    );
+}
+
+
+
+getCustomerDetails(id: string): any {
+  const customerObservable = new Observable(observer => {
+    observer.next(this.restApiService.getCustomer('alice'))
+    console.log(observer)
+    //return observer;
+  })
+  return customerObservable;
+}
+
+  public getCustomerWithBank(id: string) {
+  if (id !== null && id !== undefined) {
+    return this.restApiService.getCustomer(id)
+      .pipe(
+        switchMap((resCust) => {
+          if (resCust) {
+            return this.restApiService.getBank(resCust['bank'].split('#')[1])
+              .pipe(map(resBank => {
+                let bank = new Bank(resBank);
+                let customer = new Customer(resCust);
+                if (resBank["name"] === "Bank of Dinero") {
+                  customer.setBankObj(new Bank(resBank, 'BKDOIT60', 'IT60 9876 5321 9090'));
+                  customer.setIsImporter(true);
+                }
+                else {
+                  customer.setBankObj(new Bank(resBank, 'EWBKUS22', 'US22 1234 5678 0101'));
+                  customer.setIsImporter(false);
+                }
+                return customer;
+              }));
+          }
+          else {
             return null;
           }
-        })); 
-     }
+        }));
   }
-  //.subscribe(resultdata=>{
-      //   console.log('BRG',resultdata);
-      // }));
-      // console.log('RG',observer);
-    //   this.restApiService.getCustomer(id).subscribe((res: Customer) => {
-    //   let customer = new Customer(res);
-    //   this.restApiService.getBank(customer.getBank()).subscribe((resBank: Bank) => {
-    //     let bank_name = resBank["name"];
-    //     if (resBank["name"] === "Bank of Dinero") {
-    //       customer.setBankObj(new Bank(resBank, 'BKDOIT60', 'IT60 9876 5321 9090'));
-    //       customer.setIsImporter(true);
-    //       this.sessionGuardService.storeUser(customer);
-    //       this.sessionGuardService.storeBank(customer.getBankObj());
-    //     }
-    //     else {
-    //       customer.setBankObj(new Bank(resBank, 'EWBKUS22', 'US22 1234 5678 0101'));
-    //       customer.setIsImporter(false);
-    //       this.sessionGuardService.storeUser(customer);
-    //       this.sessionGuardService.storeBank(customer.getBankObj());
-    //     }
-        
-    //   });
-    // });
-   
-  
-  
+}
+  public getBankEmployee(id: string) {
+  if (id != null || id != undefined) {
+    return this.restApiService.getBankEmployee(id).pipe(
+      switchMap((resBankEmp) => {
+        if (resBankEmp) {
+          return this.restApiService.getBank(resBankEmp['bank'].split('#')[1])
+            .pipe(map(resBank => {
+              let bank = new Bank(resBank);
+              let bankEmp = new BankEmployee(resBankEmp);
+              if (resBank["name"] === "Bank of Dinero") {
+                bankEmp.setBankObj(new Bank(resBank, 'BKDOIT60', 'IT60 9876 5321 9090'));
+                bankEmp.setIsIssuingBank(true);
+              }
+              else {
+                bankEmp.setBankObj(new Bank(resBank, 'EWBKUS22', 'US22 1234 5678 0101'));
+                bankEmp.setIsIssuingBank(false);
+              }
+              return bankEmp;
+            }
+            ));
+        }
+        else {
+          return null;
+        }
+      }))
+  }
+}
+
+
+  public getLCs() {
+  return this.restApiService.getLCs().pipe(
+    map(resLCs => {
+      let LCs: LetterOfCredit[] = [];
+      for (var i = 0; i < resLCs.length; i++) {
+        LCs.push(new LetterOfCredit(resLCs[i]));
+      }
+      return LCs;
+    })
+  );
+}
+
+getLCbyID(id:string){
+  let urlId = id.replace(' ','%20');
+  return this.restApiService.getLC(urlId).pipe(
+    mergeMap(resLC=>{
+      return this.getTransactionsForId(id).pipe(
+        map(resTnx=>{
+          let LC = new LetterOfCredit(resLC);
+          LC.setTransactions(resTnx);
+          return LC;
+        })
+      );
+    })
+  );
+}
 
 
 }

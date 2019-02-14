@@ -40,6 +40,9 @@ export class RestApiService {
   getRejectedTransactions() {
     return this.http.get<Transaction[]>(APIURL + 'Reject');
   }
+  getInitialApplicationTransactions() {
+    return this.http.get<Transaction[]>(APIURL + 'InitialApplication');
+  }
   postLCDetails(data: LetterOfCredit) {
     let result = JSON.parse(JSON.stringify(data));
     if (result['approval'] != undefined || null)

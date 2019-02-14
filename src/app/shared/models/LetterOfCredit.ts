@@ -1,4 +1,5 @@
 import { ProductDetails } from "./ProductDetails";
+import { Transaction } from "./Transaction";
 
 export class LetterOfCredit {
     private letterId: string;
@@ -11,6 +12,7 @@ export class LetterOfCredit {
     private approval = [];
     private rules = [];
     private transactionId: string;
+    private transactions:Transaction[]=[];
     constructor(obj?: any, letterId?: string, ) {
         if (obj != undefined || null) {
             this.letterId = (obj["letterId"] != undefined || null) ? obj["letterId"] : ''
@@ -71,6 +73,12 @@ export class LetterOfCredit {
     }
     setTransactionId(transactionId: string) {
         this.transactionId = transactionId;
+    }
+    setTransactions(transactions: Transaction[]) {
+        this.transactions = transactions;
+    }
+    getTransactions() {
+        return this.transactions;
     }
     getLetterId() {
         return this.letterId;

@@ -6,8 +6,8 @@ import { CanActivate } from '@angular/router/src/utils/preactivation';
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', loadChildren: './public/login/login.module#LoginPageModule' },
-  { path: 'benbank', loadChildren: './members/dashboard/ben-bank/ben-bank.module#BenBankPageModule' },
-  { path: 'members', canActivate: [AuthGuardService], loadChildren: './members/member-routing.module#MemberRoutingModule' }
+  //{ path: 'dashboard', loadChildren: './members/dashboard/dashboard.module#DashboardPageModule' },
+  { path: 'members', canActivate: [AuthGuardService], loadChildren: './members/members-routing.module#MemberRoutingModule' }
 ];
 
 @NgModule({

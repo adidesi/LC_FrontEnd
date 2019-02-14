@@ -10,7 +10,10 @@ import { ToastController, NavController } from '@ionic/angular';
 import { BankEmployee } from '../../../shared/models/BankEmployee';
 import { Bank } from '../../../shared/models/Bank';
 import { AuthGuardService } from '../../../shared/services/authGuard.service';
-import { SessionGuardService } from '../../../shared/services/session-Guard.service';
+import { SessionGuardService } from '../../../shared/services/session-guard.service';
+import { Subscription } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+import { RestGuardService } from '../../../shared/services/rest-guard.service';
 
 @Component({
   selector: 'app-iss-bank',
@@ -19,67 +22,54 @@ import { SessionGuardService } from '../../../shared/services/session-Guard.serv
 })
 export class IssBankPage implements OnInit {
 
-  private letterOfCredit:LetterOfCredit;
+  //private letterOfCredit:LetterOfCredit;
 
-  private bankEmployee:BankEmployee;
-  LCs:LetterOfCredit[]=[];
-  items:any[]=[];
-  private isIssuingBank:boolean=false;
-  constructor(private restapi:RestApiService,private sessionguardService:SessionGuardService,
-    private sessionService:SessionService,
-    private authGuardService:AuthGuardService,public toastController: ToastController,private router:Router,
+  private bankEmployee: BankEmployee;
+  LCs: LetterOfCredit[] = [];
+  items: any[] = [];
+
+  constructor(private sessionGuardService: SessionGuardService, private restGuardService: RestGuardService,
+    private authGuardService: AuthGuardService, public toastController: ToastController, private router: Router,
     private navCtrl: NavController
-    ) { }
+  ) { }
 
-
+  public subscription: Subscription;
   ngOnInit() {
-    this.authGuardService.getToken().then(res=>{
-      this.sessionguardService.loadToken().subscribe(result=>{
-        if(res===result){
-          this.bankEmployee=null;
-          this.restapi.getBankEmployee(result).subscribe((resBankEmployee:BankEmployee)=>{
-            this.bankEmployee=new BankEmployee(resBankEmployee);
-            this.restapi.getBank(this.bankEmployee.getBank()).subscribe((resBank:Bank)=>{
-              if(resBank["name"]==="Bank of Dinero"){
-                this.bankEmployee.setBankObj(new Bank(resBank,'BKDOIT60','IT60 9876 5321 9090'));
-                this.bankEmployee.setIsIssuingBank(true);
-                this.isIssuingBank=true;
-                this.sessionService.storeUser(this.bankEmployee);
-                this.sessionService.storeBank(this.bankEmployee.getBankObj());
-              }
-              else{
-                this.bankEmployee.setBankObj(new Bank(resBank,'EWBKUS22','US22 1234 5678 0101'));
-                this.bankEmployee.setIsIssuingBank(false);
-                this.sessionService.storeUser(this.bankEmployee);
-                this.sessionService.storeBank(this.bankEmployee.getBankObj());
-              }
-            });
-          });
-        }
+    this.authGuardService.getToken().then(res => {
+      this.subscription = this.sessionGuardService.loadToken().pipe(
+        switchMap(
+          tokenVal => this.restGuardService.getBankEmployee(tokenVal))
+      ).subscribe(resBankEmp => {
+        this.bankEmployee = resBankEmp;
+
+        this.sessionGuardService.storeUser(this.bankEmployee);
+        this.sessionGuardService.storeBank(this.bankEmployee.getBankObj());
+
+        return resBankEmp;
       });
     });
-    this.restapi.getLCs().subscribe((resLCs:LetterOfCredit[])=>{
-      for(var i = 0;i < resLCs.length; i++){
-        this.LCs.push(new LetterOfCredit(resLCs[i]));
-      }
+    this.restGuardService.getLCs().subscribe(resLCs => {
+      this.LCs = resLCs;
     });
   }
- 
-  logout()
-  {
+
+  logout() {
     this.authGuardService.logout();
   }
-  async showTransactionToast(data:string){
+  async showTransactionToast(data: string) {
     const toast = await this.toastController.create({
-      message: 'Transaction Success. Id :'+data,
+      message: 'Transaction Success. Id :' + data,
       showCloseButton: false,
       position: 'bottom',
       duration: 5000
     });
     toast.present();
   }
-  getLCDetails(letterId:string)
-  {
-    this.navCtrl.navigateForward(['members','lcdetails',letterId]);
+  getLCDetails(letterId: string) {
+    this.navCtrl.navigateForward(['members', 'lcdetails', letterId]);
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }

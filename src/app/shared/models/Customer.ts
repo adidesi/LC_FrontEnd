@@ -26,6 +26,9 @@ export class Customer {
                 else
                     this.bank = obj["bank"];
             }
+            if (obj["bankObj"] != undefined || null) {
+                this.bankObj = new Bank(obj["bankObj"]);
+            }
             if (obj["$class"] != undefined || null) {
                 this.className = obj["$class"];
             }

@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { SessionGuardService } from './session-Guard.service';
+import { SessionGuardService } from './session-guard.service';
 
 describe('SessionGuardService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));

@@ -1,16 +1,15 @@
 import { Injectable } from '@angular/core';
 import { SessionService } from '../providers/session.service';
 import { Bank } from '../models/Bank';
-import { map } from 'rxjs/internal/operators/map';
-import { RestGuardService } from './rest-guard.service';
-
 
 @Injectable({
   providedIn: 'root'
 })
+
+
 export class SessionGuardService {
 
-  constructor(private sessionService: SessionService, private restGuardService: RestGuardService) { }
+  constructor(private sessionService: SessionService) { }
 
   public invalidateSession() {
     this.sessionService.invalidateSession();
@@ -28,6 +27,6 @@ export class SessionGuardService {
     return this.sessionService.loadUser();
   }
   public loadToken() {
-    return this.sessionService.tokenState;//.pipe(map(val => this.restGuardService.getCustomerWithBank(val)));
+    return this.sessionService.tokenState;
   }
 }

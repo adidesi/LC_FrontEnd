@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthGuardService } from '../../shared/services/authGuard.service';
-import { SessionGuardService } from '../../shared/services/session-Guard.service';
+import { SessionGuardService } from '../../shared/services/session-guard.service';
 
 @Component({
   selector: 'app-login',

@@ -1,5 +1,5 @@
 <ion-header>
-    <ion-toolbar *ngIf="fetchingTransactionsComplete" color="dark">
+    <ion-toolbar color="dark">
         <ion-title>LC Details</ion-title>
         <ion-buttons slot="end">
             <ion-button (click)="logout()">
@@ -9,7 +9,7 @@
     </ion-toolbar>
 </ion-header>
 
-<ion-content *ngIf="fetchingTransactionsComplete">
+<ion-content *ngIf="letterOfCredit">
     <img src="/assets/icon/{{customer.bankObj.name}}.png" alt="logo" class="bankLogo"/>
     <ion-card>
         <ion-card-header>
@@ -88,8 +88,8 @@
         <ion-card-subtitle>
             <p>Stages</p>
         </ion-card-subtitle>
-        <ion-item *ngFor="let tnx of transactions">
-            <ion-input *ngIf="tnx.status" eq approve value={{tnx.approvingParty}}></ion-input>
+        <ion-item *ngFor="let tnx of letterOfCredit.transactions">
+            <ion-input value={{tnx.approvingParty}}></ion-input>
         </ion-item>
     </ion-card>
 
