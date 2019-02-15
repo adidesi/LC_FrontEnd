@@ -13,7 +13,15 @@
     <img src="/assets/icon/{{customer.bankObj.name}}.png" alt="logo" class="bankLogo"/>
     <ion-card>
         <ion-card-header>
-            <ion-card-title>{{letterOfCredit.letterId}}</ion-card-title>
+            <ion-card-title>{{letterOfCredit.letterId}}
+                <ion-fab horizontal="end">
+                    <ion-fab-button>{{count}}%</ion-fab-button>
+                    <ion-fab-list side="bottom">
+                        <ion-fab-button><ion-icon name="logo-vimeo"></ion-icon></ion-fab-button>
+                    </ion-fab-list>
+                  </ion-fab>
+            </ion-card-title>
+            
         </ion-card-header>
         <ion-card class="card1">
             <ion-card-header>
@@ -88,8 +96,10 @@
         <ion-card-subtitle>
             <p>Stages</p>
         </ion-card-subtitle>
-        <ion-item *ngFor="let tnx of letterOfCredit.transactions">
-            <ion-input value={{tnx.approvingParty}}></ion-input>
+        <ion-item *ngFor="let tnx of letterOfCredit.transactions; index as i;">
+            <ion-input  value={{stages[i]}}{{tnx.approvingParty|uppercase}}></ion-input>
+            <!-- <p><ion-input *ngIf=tnx.status==reject value={{stages[i]}}{{tnx.closeReason|uppercase}}></ion-input></p> -->
+            <!-- <p><ion-input value={{tnx.timestamp}}></ion-input></p> -->
         </ion-item>
     </ion-card>
 

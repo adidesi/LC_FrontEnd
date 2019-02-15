@@ -6,13 +6,13 @@ import { Injectable } from '@angular/core';
 export class TrackerService {
   //stages:string[]=[];
   stages = [
-    "Requested by Applicant",
-    "Accepted by Issuing Bank",
-    "Approved by Beneficiary Bank",
-    "Acknowledged by Exporter",
-    "Products Shipped by Exporter",
-    "Products Received By Importer",
-    "Payment Made by Issuing Bank",
+    "Requested by Applicant UserId: ",
+    "Accepted by Issuing Bank. UserId: ",
+    "Approved by Beneficiary Bank. UserId: ",
+    "Acknowledged by Exporter. UserId:  ",
+    "Products Shipped by Exporter. UserId: ",
+    "Products Received By Importer. UserId: ",
+    "Payment Made by Issuing Bank. UserId: ",
     "LC closed"
   ];
 
@@ -21,4 +21,7 @@ export class TrackerService {
     return this.stages[count];
   }
 
+  getStages(){
+    return this.stages;
+  }
 }

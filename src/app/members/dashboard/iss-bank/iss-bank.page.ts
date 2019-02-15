@@ -41,10 +41,7 @@ export class IssBankPage implements OnInit {
           tokenVal => this.restGuardService.getBankEmployee(tokenVal))
       ).subscribe(resBankEmp => {
         this.bankEmployee = resBankEmp;
-
         this.sessionGuardService.storeUser(this.bankEmployee);
-        this.sessionGuardService.storeBank(this.bankEmployee.getBankObj());
-
         return resBankEmp;
       });
     });

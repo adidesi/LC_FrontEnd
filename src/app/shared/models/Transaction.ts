@@ -1,5 +1,5 @@
 import { Timestamp } from "rxjs";
-import { reject, approve } from '../constant'
+import { reject, approve, CREATE } from '../constant'
 
 export class Transaction {
     private letterId: string;//loc
@@ -27,6 +27,8 @@ export class Transaction {
                 if (obj["approvingParty"] != undefined || null) {
                 this.approvingParty = obj["approvingParty"].split('#')[1];
                 }
+            } else if (status == CREATE){
+                this.approvingParty = obj["applicant"].split('#')[1];
             }
         }
         if (letterId != undefined || null)

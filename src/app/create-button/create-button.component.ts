@@ -24,7 +24,7 @@ export class CreateButtonComponent implements ProcessComponent {
     //   this.router.navigate(['members']);
     //   console.log("Transaction ID:",res["transactionId"]);
     // });
-    console.log('Create LC');
+    this.router.navigate(['members', 'createLC']);
   }
   async showTransactionToast(data:string){
     const toast = await this.toastController.create({

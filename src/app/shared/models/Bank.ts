@@ -11,6 +11,10 @@ export class Bank {
                 this.bankId = obj["bankID"];
             if (obj["name"] != undefined || null)
                 this.name = obj["name"];
+            if (obj["swiftCode"] != undefined || null)
+                this.swiftCode = obj["swiftCode"];
+            if (obj["IBAN"] != undefined || null)
+                this.IBAN = obj["IBAN"];
         }
         if (bankId != undefined || null)
             this.bankId = bankId;

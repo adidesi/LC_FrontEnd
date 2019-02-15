@@ -25,18 +25,8 @@ export class SessionService {
   loadUser() {
     return this.storage.get(this.CUSTOMER_KEY);
   }
-  storeBank(bank: Bank) {
-    return this.storage.set(this.BANK_KEY, bank);
-  }
-  loadBank() {
-    return this.storage.get(this.BANK_KEY);
-  }
   invalidateSession() {
     this.storage.remove(this.CUSTOMER_KEY);
-    this.storage.remove(this.BANK_KEY);
-    // this.tokenState.next('');
-
-
-
+    this.storage.remove(this.BANK_KEY);  
   }
 }

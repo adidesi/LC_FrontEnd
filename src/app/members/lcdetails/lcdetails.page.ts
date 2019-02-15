@@ -30,38 +30,43 @@ export class LCDetailsPage implements OnInit {
   private bankEmployee: boolean;
   private approvals_count: string[] = [];
   private subscription: Subscription;
+  private count:number;
   constructor(private restapi: RestApiService, private sessionGuardService: SessionGuardService, private activatedroute: ActivatedRoute,
     private authGuardService: AuthGuardService, public toastController: ToastController, private router: Router,
-    private tackerAuth: TrackerService, private restGuardService: RestGuardService
+    private tackerService: TrackerService, private restGuardService: RestGuardService
   ) { }
+
+  stages:string[]=[];
 
   ngOnInit() {
     this.createLC = (this.activatedroute.snapshot.paramMap.get('letterId') != null || '' || undefined) ? false : true;
-    this.authGuardService.getToken().then(res => {
-      if (this.createLC) {
+    let obs =this.sessionGuardService.loadToken().pipe(
+      switchMap(
+        tokenVal => this.sessionGuardService.loadUser()
+      )
+    ).pipe(
+      map(rescust=>{
+        this.customer = new Customer(rescust);
+      })
+    );
+    if(this.createLC){
+      this.subscription=obs.subscribe(res=>{
         this.letterOfCredit = new LetterOfCredit({ applicant: 'x#alice', beneficiary: 'x#bob' }, 'L' + Date.now().toString() + ' AM');
-      } else {
-        this.loc = this.activatedroute.snapshot.paramMap.get('letterId');
-        this.subscription = this.sessionGuardService.loadToken().pipe(
-          switchMap(
-            tokenVal => forkJoin(this.sessionGuardService.loadUser(),this.restGuardService.getLCbyID(this.loc))
-          )
-        )
-        .subscribe(result => {
-          console.log(result);
-          this.customer = new Customer(result[0]);
-          console.log(this.customer);
-          this.letterOfCredit = result[1];
-        }
-        );
-      }
-    });
+      });
+    }else{
+      this.loc = this.activatedroute.snapshot.paramMap.get('letterId');
+      this.subscription=obs.pipe(switchMap(val=>this.restGuardService.getLCbyID(this.loc))).subscribe(result => {
+        this.count=result.getTransactions().length*12.5;
+        this.stages = this.tackerService.getStages();
+        this.letterOfCredit = result;
+      });
+    }
+
   }
   createNewLC() {
     this.restapi.postLCDetails(this.letterOfCredit).subscribe(res => {
       this.showTransactionToast(res["transactionId"]);
       this.router.navigate(['members']);
-      console.log("Transaction ID:", res["transactionId"]);
     });
   }
   logout() {

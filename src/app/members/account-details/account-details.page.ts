@@ -23,12 +23,12 @@ export class AccountDetailsPage implements OnInit {
 
   ngOnInit() {
     this.allowEdit = true;
-    this.sessionService.loadBank().then(resBank => {
+    
       this.sessionService.loadUser().then(resCust => {
         this.customer = new Customer(resCust);
-        this.customer.setBankObj(resBank);
+        //this.customer.setBankObj(resBank);
       });
-    });
+   
   }
   toggleEditOrSave() {
     this.allowEdit = (this.allowEdit) ? false : true;

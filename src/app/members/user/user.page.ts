@@ -44,10 +44,7 @@ export class CustomerPage implements OnInit {
           tokenVal => this.restGuardService.getCustomerWithBank(tokenVal))
       ).subscribe(resCust => {
         this.customer = resCust;
-
         this.sessionGuardService.storeUser(this.customer);
-        this.sessionGuardService.storeBank(this.customer.getBankObj());
-
         this.bank_name = this.customer.getBankObj().getName();
         let step = this.getNameForButton();
         const factory = this.resolver.resolveComponentFactory(step.component);
@@ -79,7 +76,6 @@ export class CustomerPage implements OnInit {
   {
     let comp = this.resolveComponentsName(this.bank_name);
     let newItem = new ProcessItem(comp, this.bank_name);
-    //console.log("bank in cust",this.bank_name);
     return newItem;
   }
   private resolveComponentsName(name) {
