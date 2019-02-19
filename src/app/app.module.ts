@@ -12,11 +12,13 @@ import {IonicStorageModule} from '@ionic/storage';
 
 import { HttpClientModule } from '@angular/common/http';
 import { CreateButtonComponent } from './create-button/create-button.component';
+import { MembersComponent } from './members/members.component';
+import { PopoverComponent } from './members/popover/popover.component';
 
 @NgModule({
-  declarations: [AppComponent, CreateButtonComponent],
-  entryComponents: [CreateButtonComponent],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,IonicStorageModule.forRoot(), HttpClientModule,],
+  declarations: [AppComponent, CreateButtonComponent, MembersComponent, PopoverComponent],
+  entryComponents: [CreateButtonComponent,PopoverComponent],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,IonicStorageModule.forRoot(), HttpClientModule],
   providers: [
     StatusBar,
     SplashScreen,

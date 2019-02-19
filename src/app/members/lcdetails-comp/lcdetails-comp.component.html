@@ -1,0 +1,93 @@
+<ion-content class="contentHeight" *ngIf="letterOfCredit">
+    <img src="/assets/icon/{{customer.bankObj.name}}.png" alt="logo" class="bankLogo"/>
+    <ion-card>
+        <ion-card-header>
+            <ion-card-title>{{letterOfCredit.letterId}}
+                <ion-fab horizontal="end">
+                    <ion-fab-button (click)="presentPopover($event)">{{count}}%</ion-fab-button>
+                   
+                  </ion-fab>
+            </ion-card-title>
+            
+        </ion-card-header>
+        <ion-card class="card1">
+            <ion-card-header>
+                <ion-card-subtitle>
+                    <p>Application Request:</p>
+                    <ion-input [(ngModel)]="letterOfCredit.applicant" placeholder='Applicant Name' readonly></ion-input>
+                </ion-card-subtitle>
+                <ion-card-subtitle>
+                    <p>Supplier Request:</p>
+                    <ion-input [(ngModel)]="letterOfCredit.beneficiary" placeholder='Beneficiary Name' readonly></ion-input>
+                </ion-card-subtitle>
+            </ion-card-header>
+        </ion-card>
+        <ion-card class="card2">
+            <ion-card-header>
+                <ion-card-subtitle>Product Details:</ion-card-subtitle>
+            </ion-card-header>
+            <ion-list class="no-padding">
+                <ion-item>
+                    <ion-label color="dark" class="no-padding label_size">
+                        <p>Type: </p>
+                    </ion-label>
+                    <ion-input [(ngModel)]="letterOfCredit.productDetails.productType" placeholder='Product Type' readonly={{!createLC}}></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label color="dark" class="no-padding label_size">
+                        <p>Quantity: </p>
+                    </ion-label>
+                    <ion-input [(ngModel)]="letterOfCredit.productDetails.quantity" placeholder='Quantity' readonly={{!createLC}}></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label color="dark" class="no-padding label_size">
+                        <p>Price Per Unit: € </p>
+                    </ion-label>
+                    <ion-input [(ngModel)]="letterOfCredit.productDetails.pricePerUnit" placeholder='Price per Unit' readonly={{!createLC}}></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label color="dark" class="no-padding label_size">
+                        <p>TOTAL: € </p>
+                    </ion-label>
+                    <ion-input value={{letterOfCredit.productDetails.quantity*letterOfCredit.productDetails.pricePerUnit}} placeholder='Total Price'
+                        readonly></ion-input>
+                </ion-item>
+            </ion-list>
+        </ion-card>
+        <ion-card>
+            <ion-card-subtitle>
+                <p>Terms and Conditions:</p>
+            </ion-card-subtitle>
+            <ion-item *ngFor="let items of letterOfCredit.rules">
+                <ion-textarea value={{items}}></ion-textarea>
+            </ion-item>
+        </ion-card>
+        <div *ngIf="bankEmployee">
+            <ion-grid>
+                <ion-row>
+                    <ion-col size="3"></ion-col>
+                    <ion-col size="3">
+                        <ion-button color="bankgreen">Accept</ion-button>
+                    </ion-col>
+                    <ion-col size="3">
+                        <ion-button color="bankgreen">Reject</ion-button>
+                    </ion-col>
+                    <ion-col size="3"></ion-col>
+                </ion-row>
+            </ion-grid>
+
+        </div>
+    </ion-card>
+
+    <ion-card>
+        <ion-card-subtitle>
+            <p>Stages</p>
+        </ion-card-subtitle>
+        <ion-item *ngFor="let tnx of letterOfCredit.transactions; index as i;">
+            <ion-input  value={{stages[i]}}{{tnx.approvingParty|uppercase}}></ion-input>
+            <!-- <p><ion-input *ngIf=tnx.status==reject value={{stages[i]}}{{tnx.closeReason|uppercase}}></ion-input></p> -->
+            <!-- <p><ion-input value={{tnx.timestamp}}></ion-input></p> -->
+        </ion-item>
+    </ion-card>
+
+</ion-content>

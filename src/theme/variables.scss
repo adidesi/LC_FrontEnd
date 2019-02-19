@@ -95,3 +95,13 @@
 .bankLogo{
     border: 1px black solid;
   }
+
+  .popover_class .popover-content{
+    --background: blue;  // to take care of a possible css4
+    background: blue;     // to treat it as normal css
+  
+  }
+
+  .custom-popover .popover-content {
+    width: 80%;
+  }

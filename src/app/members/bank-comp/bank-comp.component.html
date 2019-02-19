@@ -1,0 +1,36 @@
+
+  <ion-content class="dis_scroll" *ngIf ="bankEmployee">
+    <img src="/assets/icon/{{bankEmployee.bankObj.name}}.png" alt="logo" style="border: 1px black solid" *ngIf ="bankEmployee.bankObj"/>
+    <ion-card>
+      <ion-card-header id="detailsCard">
+        <div ><ion-card-subtitle class="my-label">Welcome, {{bankEmployee.name}} </ion-card-subtitle></div>
+    </ion-card-header>
+    </ion-card>
+    <div class="my-label_1" text-center>LC List</div>
+    <div class="enable_scroll" id="LCsListCard">
+       <ion-card>
+          <ion-virtual-scroll [items]="LCs" >
+              <ion-item *virtualItem="let LC">
+                    <ion-card style="width: -webkit-fill-available" (click)="getLCDetails(LC.letterId)">
+                          <ion-card-header>
+                              <ion-grid>
+                                  <ion-row>
+                                      <ion-col size="3">
+                                          <img src="/assets/icon/doc_LC.png">  
+                                      </ion-col>
+                                      <ion-col>
+                                          <ion-row><ion-card-subtitle style="font-size:0.9em;color: crimson;" text-right>{{LC.status}}</ion-card-subtitle></ion-row>
+                                          <ion-row><ion-card-subtitle class="refID" style="font-size:1.1em;font-weight: bold;color:black;" text-center>{{LC.letterId}}</ion-card-subtitle><hr style="display: table-column;"></ion-row>
+                                          <ion-row><ion-card-subtitle text-center>Total Value</ion-card-subtitle></ion-row>
+                                          <ion-row><ion-card-subtitle class="refID" text-center>€ {{LC.productDetails.pricePerUnit*LC.productDetails.quantity}}</ion-card-subtitle></ion-row>
+                                      </ion-col>
+                                  </ion-row>
+                            </ion-grid>
+                        </ion-card-header>
+                    </ion-card>
+                </ion-item>  
+          </ion-virtual-scroll>
+        </ion-card>
+    </div>
+  </ion-content>  
+ 
