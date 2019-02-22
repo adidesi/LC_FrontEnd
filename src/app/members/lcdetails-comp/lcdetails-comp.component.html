@@ -1,14 +1,16 @@
 <ion-content class="contentHeight" *ngIf="letterOfCredit">
-    <img src="/assets/icon/{{customer.bankObj.name}}.png" alt="logo" class="bankLogo"/>
+    <img src="/assets/icon/{{customer.bankObj.name}}.png" alt="logo" class="bankLogo" />
     <ion-card>
         <ion-card-header>
             <ion-card-title>{{letterOfCredit.letterId}}
-                <ion-fab horizontal="end">
+                <!-- <ion-fab horizontal="end">
                     <ion-fab-button (click)="presentPopover($event)">{{count}}%</ion-fab-button>
-                   
-                  </ion-fab>
+                  </ion-fab> -->
+                <div text-right *ngIf="!createLC">
+                    <ion-button fill="outline" shape="round" size="small" color="bankgreen" (click)="showStatus()">{{countName}}</ion-button>
+                </div>
             </ion-card-title>
-            
+
         </ion-card-header>
         <ion-card class="card1">
             <ion-card-header>
@@ -84,10 +86,11 @@
             <p>Stages</p>
         </ion-card-subtitle>
         <ion-item *ngFor="let tnx of letterOfCredit.transactions; index as i;">
-            <ion-input  value={{stages[i]}}{{tnx.approvingParty|uppercase}}></ion-input>
+            <ion-input value={{stages[i]}}{{tnx.approvingParty|uppercase}}></ion-input>
             <!-- <p><ion-input *ngIf=tnx.status==reject value={{stages[i]}}{{tnx.closeReason|uppercase}}></ion-input></p> -->
             <!-- <p><ion-input value={{tnx.timestamp}}></ion-input></p> -->
         </ion-item>
     </ion-card>
-
+    <!-- <app-create-button></app-create-button> -->
+    <app-tnx-button  [childMessage]="btn1" [value2]="btn2"></app-tnx-button>
 </ion-content>

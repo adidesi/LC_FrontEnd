@@ -7,8 +7,8 @@ import { NavParams } from '@ionic/angular';
   styleUrls: ['./popover.component.scss']
 })
 export class PopoverComponent implements OnInit {
-  items:string []=[];
-  Tracks:string []=[];
+  //items:string []=[];
+  Tracks:any []=[];
   passedCount=null;
   constructor(private navParams:NavParams) { }
 
@@ -20,9 +20,9 @@ export class PopoverComponent implements OnInit {
     }
     
     console.log(this.Tracks);
-    this.items=[
-      "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","item1","item1","item1","item1","item1","item1","item1",
-    ]
+    // this.items=[
+    //   "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","item1","item1","item1","item1","item1","item1","item1",
+    // ]
   }
 
 }

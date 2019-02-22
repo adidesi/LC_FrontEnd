@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { RestApiService } from '../providers/rest-api.service';
-import { Observable, of, forkJoin, Subscription, } from 'rxjs';
+import { Observable, of, forkJoin, Subscription, combineLatest, } from 'rxjs';
 import { mergeMap, switchMap, map } from 'rxjs/operators';
 import { Transaction } from '../models/Transaction';
 import { HttpClient } from '@angular/common/http';
 import { Bank } from '../models/Bank';
-import { approve, reject, CREATE, APIURL, InitialApplicationClass } from '../constant';
+import { approve, reject, CREATE, APIURL, InitialApplicationClass,SHIP,RECEIVE,PAYMENT,CLOSE } from '../constant';
 import { Customer } from '../models/Customer';
 import { SessionGuardService } from './session-guard.service';
 import { BankEmployee } from '../models/BankEmployee';
@@ -16,37 +16,30 @@ import { LetterOfCredit } from '../models/LetterOfCredit';
 })
 export class RestGuardService {
 
-  constructor(private restApiService: RestApiService, private http: HttpClient, 
+  constructor(private restApiService: RestApiService, private http: HttpClient,
     private sessionGuardService: SessionGuardService) { }
 
-  getTransactions(): Observable<any> {
-    var initTnxObs = this.restApiService.getInitialApplicationTransactions();
-    var approveTnxObs = this.restApiService.getApprovedTransactions();
-    var rejectTnxObs = this.restApiService.getRejectedTransactions();
-    return forkJoin([initTnxObs, approveTnxObs, rejectTnxObs]);
+  getTransactions(id: string): Observable<any> {
+    let urlId = id.replace(' ', '%20');
+    var initTnxObs = this.restApiService.getInitialApplicationTransactions(urlId);
+    var approveTnxObs = this.restApiService.getApprovedTransactions(urlId.replace('%','%25'));
+    var rejectTnxObs = this.restApiService.getRejectedTransactions(urlId.replace('%','%25'));
+    var shipTnxObs = this.restApiService.getShipProductTransactions(urlId.replace('%','%25'));
+    var receivetnxobs = this.restApiService.getReceivedProductTransactions(urlId.replace('%','%25'));
+    var paymentTnxObs = this.restApiService.getReadyForPaymentTransactions(urlId.replace('%','%25'));
+    var closeTnxObs = this.restApiService.getCloseLCTransactions(urlId.replace('%','%25'));
+    return combineLatest([initTnxObs, approveTnxObs, rejectTnxObs, shipTnxObs, receivetnxobs, paymentTnxObs, closeTnxObs]);
   }
 
   getTransactionsForId(id: string) {
-    return this.getTransactions().pipe(
+    return this.getTransactions(id).pipe(
       map(
         resAllTnx => {
-          let urlId = id.replace(' ', '%20');
+          console.log('transactions',resAllTnx);
           let LCTnxforId: Transaction[] = [];
           for (let i = 0; i < resAllTnx.length; i++) {
             for (let j = 0; j < resAllTnx[i].length; j++) {
-              if (resAllTnx[i][j]['$class'].split('.')[3] == InitialApplicationClass) {
-                if (resAllTnx[i][j]['letterId'] == id) {
-                  LCTnxforId.push(new Transaction(resAllTnx[i][j], CREATE));
-                }
-              }
-              else {
-                if (resAllTnx[i][j]['loc'].split('#')[1] == urlId) {
-                  if (resAllTnx[i][j]['$class'].split('.')[3] == 'Approve')
-                    LCTnxforId.push(new Transaction(resAllTnx[i][j], approve));
-                  else
-                    LCTnxforId.push(new Transaction(resAllTnx[i][j], reject));
-                }
-              }
+                  LCTnxforId.push(new Transaction(resAllTnx[i][j], resAllTnx[i][j]['$class'].split('.')[3]));
             }
           }
           return LCTnxforId;
@@ -111,7 +104,7 @@ export class RestGuardService {
   }
 
 
-  public getLCs() {
+  getLCs() {
     return this.restApiService.getLCs().pipe(
       map(resLCs => {
         let LCs: LetterOfCredit[] = [];

@@ -11,6 +11,8 @@ import { BankCompComponent } from './members/bank-comp/bank-comp.component';
 import { AccountDetailsCompComponent } from './members/account-details-comp/account-details-comp.component';
 import { FormsModule } from '@angular/forms';
 import { LCDetailsCompComponent } from './members/lcdetails-comp/lcdetails-comp.component';
+import { TnxButtonComponent } from './members/tnx-button/tnx-button.component';
+import { TrackerCompComponent } from './members/tracker-comp/tracker-comp.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -24,13 +26,15 @@ children: [
   { path: Roles.ella,component:BankCompComponent},
   { path: 'accountDetails',component:AccountDetailsCompComponent},
   { path: 'lcdetails/:letterId',component:LCDetailsCompComponent },
+  { path: 'createLC',component:LCDetailsCompComponent },
+  { path: 'trackerComp', component:TrackerCompComponent}
 ] },
 
 
 ];
 
 @NgModule({
-  declarations:[CustomerCompComponent,BankCompComponent,AccountDetailsCompComponent,LCDetailsCompComponent],
+  declarations:[CustomerCompComponent,BankCompComponent,AccountDetailsCompComponent,LCDetailsCompComponent,TnxButtonComponent,TrackerCompComponent],
   imports: [RouterModule.forRoot(routes),IonicModule,CommonModule,FormsModule],
   exports: [RouterModule]
 })

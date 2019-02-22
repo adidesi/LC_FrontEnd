@@ -16,12 +16,12 @@
       font-family:Georgia, 'Times New Roman', Times, serif
     }
     .dis_scroll{
-      --overflow:hidden;
+      //--overflow:hidden;
       height:647px;
     }
     .enable_scroll{
       max-height: 40%;
-      overflow-y: scroll;
+      //overflow-y: scroll;
     }
     .tool_css{
       --padding-bottom:0px;
