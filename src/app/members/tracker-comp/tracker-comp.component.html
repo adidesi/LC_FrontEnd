@@ -1,0 +1,16 @@
+<ion-content class="contentHeight" *ngIf="customer">
+    <img src="/assets/icon/{{customer.bankObj.name}}.png" alt="logo" class="bankLogo" id="imgBank" *ngIf="customer.bankObj" />
+    <ion-card>
+      <ion-header>
+          <ion-card-title>STATUS OF LC</ion-card-title>
+      </ion-header>
+   
+        <ion-item *ngFor="let stage of stages">
+            <ion-label>{{stage}}</ion-label>
+            </ion-item>
+        <!-- <ion-item><span class={{str}}></span>1</ion-item>
+        <ion-item><span class={{str}}></span>2</ion-item>
+        <ion-item><span class={{str}}></span>3</ion-item> -->
+    
+    </ion-card>
+</ion-content>
