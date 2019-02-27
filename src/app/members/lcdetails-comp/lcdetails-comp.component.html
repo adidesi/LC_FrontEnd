@@ -7,7 +7,7 @@
                     <ion-fab-button (click)="presentPopover($event)">{{count}}%</ion-fab-button>
                   </ion-fab> -->
                 <div text-right *ngIf="!createLC">
-                    <ion-button fill="outline" shape="round" size="small" color="bankgreen" (click)="showStatus()">{{countName}}</ion-button>
+                    <ion-button fill="outline" shape="round" size="small" color="bankgreen" (click)="showStatus()">Status : {{countName}}</ion-button>
                 </div>
             </ion-card-title>
 
@@ -58,10 +58,11 @@
         </ion-card>
         <ion-card>
             <ion-card-subtitle>
-                <p>Terms and Conditions:</p>
+                Terms and Conditions:
+                <div text-right *ngIf="createLC"><ion-button fill="outline" shape="round" size="small" color="primary" (click)="addRule()">+</ion-button></div>
             </ion-card-subtitle>
-            <ion-item *ngFor="let items of letterOfCredit.rules">
-                <ion-textarea value={{items}}></ion-textarea>
+            <ion-item *ngFor="let rule of letterOfCredit.rules">
+                <ion-textarea [(ngModel)]="rule.ruleText" readonly={{!createLC}}></ion-textarea>
             </ion-item>
         </ion-card>
         <div *ngIf="bankEmployee">
@@ -81,16 +82,16 @@
         </div>
     </ion-card>
 
-    <ion-card>
+    <!-- <ion-card>
         <ion-card-subtitle>
             <p>Stages</p>
         </ion-card-subtitle>
         <ion-item *ngFor="let tnx of letterOfCredit.transactions; index as i;">
             <ion-input value={{stages[i]}}{{tnx.approvingParty|uppercase}}></ion-input>
-            <!-- <p><ion-input *ngIf=tnx.status==reject value={{stages[i]}}{{tnx.closeReason|uppercase}}></ion-input></p> -->
-            <!-- <p><ion-input value={{tnx.timestamp}}></ion-input></p> -->
+            <p><ion-input *ngIf=tnx.status==reject value={{stages[i]}}{{tnx.closeReason|uppercase}}></ion-input></p> 
+            <p><ion-input value={{tnx.timestamp}}></ion-input></p> 
         </ion-item>
-    </ion-card>
+    </ion-card> -->
     <!-- <app-create-button></app-create-button> -->
-    <app-tnx-button  [childMessage]="btn1" [value2]="btn2"></app-tnx-button>
+    <app-tnx-button [childMessage]="btn1" [value2]="btn2"></app-tnx-button>
 </ion-content>

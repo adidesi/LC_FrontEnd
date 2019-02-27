@@ -23,4 +23,12 @@ export class SessionGuardService {
   public loadToken() {
     return this.sessionService.tokenState;
   }
+  public storeLC(LCDetails)
+  {
+    return this.sessionService.storeLC(LCDetails);
+  }
+  public loadLC()
+  {
+    return this.sessionService.loadLC();
+  }
 }

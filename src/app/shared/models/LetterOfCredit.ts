@@ -1,5 +1,7 @@
 import { ProductDetails } from "./ProductDetails";
 import { Transaction } from "./Transaction";
+import { Rule } from "./Rule";
+// import { Rule } from "./Rule";
 
 export class LetterOfCredit {
     private letterId: string;
@@ -10,16 +12,18 @@ export class LetterOfCredit {
     private status: string;
     private productDetails: ProductDetails;
     private approval = [];
-    private rules = [];
+    private rules: Rule[] = [];
     private transactionId: string;
-    private transactions:Transaction[]=[];
-    constructor(obj?: any, letterId?: string, ) {
+    private transactions: Transaction[] = [];
+    constructor(obj?: any, letterId?: string) {
         if (obj != undefined || null) {
+            //console.log("in constructor ",JSON.stringify(obj))
             this.letterId = (obj["letterId"] != undefined || null) ? obj["letterId"] : ''
-            this.applicant = (obj["applicant"] != undefined || null) ? obj["applicant"].split('#')[1] : '';
-            this.beneficiary = (obj["beneficiary"] != undefined || null) ? obj["beneficiary"].split('#')[1] : '';
-            this.issuingBank = (obj["issuingBank"] != undefined || null) ? obj["issuingBank"].split('#')[1] : '';
-            this.exportingBank = (obj["exportingBank"] != undefined || null) ? obj["exportingBank"].split('#')[1] : '';
+            this.applicant = (obj["applicant"] != undefined || null) ? (obj["applicant"].toString().search('#') != -1) ? obj["applicant"].split('#')[1] : obj["applicant"] : '';
+            this.beneficiary = (obj["beneficiary"] != undefined || null) ? (obj["beneficiary"].toString().search('#') != -1) ? obj["beneficiary"].split('#')[1] : obj["beneficiary"] : '';
+            this.issuingBank = (obj["issuingBank"] != undefined || null) ? (obj["issuingBank"].toString().search('#') != -1) ? obj["issuingBank"].split('#')[1] : obj["issuingBank"] : '';
+            //console.log('in c',this.issuingBank)
+            this.exportingBank = (obj["exportingBank"] != undefined || null) ? (obj["exportingBank"].toString().search('#') != -1) ? obj["exportingBank"].split('#')[1] : obj["exportingBank"] : '';
             this.status = (obj["status"] != undefined || null) ? obj["status"] : '';
             this.productDetails = (obj["productDetails"] != undefined || null) ? new ProductDetails(obj["productDetails"]) : new ProductDetails();
             this.transactionId = (obj["transactionId"] != undefined || null) ? obj["transactionId"] : '';
@@ -30,12 +34,20 @@ export class LetterOfCredit {
             } else {
                 this.approval = new Array();
             }
-            if (obj["rules"] != undefined || null) {
+            if ((obj["rules"] != undefined || null) && obj["rules"].length != 0) {
+                this.rules = new Array();
                 for (var i = 0; i < obj["rules"].length; i++) {
-                    this.rules.push(obj["rules"][i]["ruleText"]);
+                    this.rules.push(new Rule(obj["rules"][i]));
                 }
             } else {
                 this.rules = new Array();
+            }
+            if (obj["transactions"] != undefined || null) {
+                for (var i = 0; i < obj["transactions"].length; i++) {
+                    this.transactions.push(obj["transactions"][i]);
+                }
+            } else {
+                this.transactions = new Array();
             }
         } else {
             this.letterId = '';
@@ -48,6 +60,7 @@ export class LetterOfCredit {
             this.productDetails = new ProductDetails();
             this.approval = [];
             this.rules = new Array();
+            this.transactions = new Array();
         }
         if (letterId != undefined || null)
             this.letterId = letterId;
@@ -80,6 +93,12 @@ export class LetterOfCredit {
     getTransactions() {
         return this.transactions;
     }
+    getRule() {
+        return this.rules
+    }
+    getTransactionById(index: number) {
+        return this.transactions[index];
+    }
     getLetterId() {
         return this.letterId;
     }
@@ -104,6 +123,8 @@ export class LetterOfCredit {
     getTransactionId() {
         return this.transactionId;
     }
-
+    addRule() {
+        this.rules.push(new Rule())
+    }
 
 }

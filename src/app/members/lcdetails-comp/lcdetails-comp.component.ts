@@ -13,7 +13,7 @@ import { RestGuardService } from '../../shared/services/rest-guard.service';
 import { switchMap, map } from 'rxjs/operators';
 import { PopoverComponent } from '../popover/popover.component';
 import { TnxButtonComponent } from '../tnx-button/tnx-button.component';
-import { StageStatusService } from '../../shared/services/stage-status.service';
+import{ CustomerClass} from '../../shared/constant'
 
 @Component({
   selector: 'app-lcdetails-comp',
@@ -22,7 +22,7 @@ import { StageStatusService } from '../../shared/services/stage-status.service';
 })
 export class LCDetailsCompComponent implements OnInit {
 
-  private letterOfCredit: LetterOfCredit;
+  private letterOfCredit: LetterOfCredit=null;
   private loc: string;//in URL Format
   private transactions = new Array<Transaction>();
   private fetchingTransactionsComplete: boolean = false;
@@ -39,8 +39,7 @@ export class LCDetailsCompComponent implements OnInit {
   btn1 = "";
   constructor(private restapi: RestApiService, private sessionGuardService: SessionGuardService, private activatedroute: ActivatedRoute,
     private authGuardService: AuthGuardService, public toastController: ToastController, private router: Router,
-    private tackerService: TrackerService, private restGuardService: RestGuardService,private popoverController:PopoverController,
-    private stageStatusService:StageStatusService
+    private tackerService: TrackerService, private restGuardService: RestGuardService,private popoverController:PopoverController
       ) { }
 
   stages:string[]=[];
@@ -54,33 +53,35 @@ export class LCDetailsCompComponent implements OnInit {
     ).pipe(
       map(rescust=>{
         this.customer = new Customer(rescust);
+        //console.log('resCust'+this.customer.getBank());
       })
     );
     if(this.createLC){
       this.subscription=obs.subscribe(res=>{
-        this.letterOfCredit = new LetterOfCredit({ applicant: 'x#alice', beneficiary: 'x#bob' }, 'L' + Date.now().toString() + ' AM');
+        this.letterOfCredit = new LetterOfCredit({ "applicant": 'x#alice', "beneficiary": 'x#bob' }, 'L' + Date.now().toString() + ' AM');
+        // console.log('this.letterOfCredit'+this.letterOfCredit.getApplicant()+this.letterOfCredit.getBeneficiary()+this.letterOfCredit.getExportingBank()+this.letterOfCredit.getIssuingBank()+'blah'+this.customer.getBank());
+        //console.log('this.letterOfCredit.getIssuingBank()',this.letterOfCredit.getIssuingBank());
         this.btn1="SAVE"
         this.btn2="CANCEL";
+        //console.log('details',this.letterOfCredit)
       });
     }else{
-      
       this.loc = this.activatedroute.snapshot.paramMap.get('letterId');
       this.subscription=obs.pipe(switchMap(val=>this.restGuardService.getLCbyID(this.loc))).subscribe(result => {
-        this.countName=this.tackerService.getStage(result.getTransactions().length-1);
-        console.log('countName',this.countName)
-        this.stageStatusService.setStageName(this.countName);
+        this.letterOfCredit =result;
+        this.count=this.letterOfCredit.getTransactions().length;
+        this.countName=this.letterOfCredit.getTransactionById(this.count-1).getStatus()
+        //console.log('LC',this.letterOfCredit)
         this.stages = this.tackerService.getStages();
-        console.log(this.stages);
-        this.count=result.getTransactions().length;
-        this.stageStatusService.setStageCount(this.count);
+        //console.log(this.stages);
+        this.sessionGuardService.storeLC(this.letterOfCredit);
         if(this.count<4)
         {
           this.btn1="APPROVE"
           this.btn2="REJECT";
         }
-        else{
+        else
           this.btn2="CANCEL";
-        } 
         if(this.count==4)
           this.btn1="SHIP PRODUCT";
         else if(this.count==5)
@@ -89,14 +90,15 @@ export class LCDetailsCompComponent implements OnInit {
           this.btn1="PAY";
         else if(this.count==7)
           this.btn1="CLOSE";
-
-        console.log('this.count',this.count);
-        this.letterOfCredit = result;
-        console.log("this.letterOfCredit",this.letterOfCredit);
+         
+          //console.log("this.letterOfCredit",this.letterOfCredit.getIssuingBank());
       });
+      
+     //console.log('this.letterOfCredit',this.letterOfCredit)
     }
     
-
+    
+    
   }
   getCount()
   {
@@ -148,7 +150,10 @@ export class LCDetailsCompComponent implements OnInit {
     });
     return await popover.present();
   }
-
+  addRule()
+  {
+ this.letterOfCredit.addRule()
+  }
 
 
 }

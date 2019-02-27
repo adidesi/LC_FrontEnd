@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { token_importer, token_exporter, APIURL } from '../constant';
+import { token_importer, token_exporter, APIURL,CustomerClass } from '../constant';
 import { Customer } from '../models/Customer';
 import { Bank } from '../models/Bank';
 import { LetterOfCredit } from '../models/LetterOfCredit';
@@ -57,6 +57,7 @@ export class RestApiService {
   }
   postLCDetails(data: LetterOfCredit) {
     let result = JSON.parse(JSON.stringify(data));
+   //console.log('dataLC'+JSON.stringify(data));
     if (result['approval'] != undefined || null)
       delete result['approval'];
     if (result['issuingBank'] != undefined || null)
@@ -88,10 +89,25 @@ export class RestApiService {
     if (result['status'] != undefined || null)
       delete result['status'];
 
-    console.log("result", result);
+    //console.log("result", result);
     return this.http.post(APIURL + 'Approve', result);
   }
+  rejectLCData(resultData: Transaction) {
+    let result = JSON.parse(JSON.stringify(resultData));
+    if (result['timestamp'] != undefined || null)
+      delete result['timestamp'];
+    if (result['date'] != undefined || null)
+      delete result['date'];
+    if (result['time'] != undefined || null)
+      delete result['time'];
+    if (result['transactionId'] != undefined || null)
+      delete result['transactionId'];
+    if (result['status'] != undefined || null)
+      delete result['status'];
 
+    //console.log("result", result);
+    return this.http.post(APIURL + 'Reject', result);
+  }
   shipProduct(data:Transaction){
     let result = JSON.parse(JSON.stringify(data));
     if (result['timestamp'] != undefined || null)
@@ -107,7 +123,7 @@ export class RestApiService {
     if (result['status'] != undefined || null)
       delete result['status'];
 
-    console.log("result", result);
+    //console.log("result", result);
     return this.http.post(APIURL + 'ShipProduct', result);
   }
   receiveProduct(data:Transaction){
@@ -127,7 +143,7 @@ export class RestApiService {
     if (result['evidence'] != undefined || null)
       delete result['evidence'];
 
-    console.log("result", result);
+    //console.log("result", result);
     return this.http.post(APIURL + 'ReceiveProduct', result);
   }
   readyForPayment(data:Transaction){
@@ -147,7 +163,7 @@ export class RestApiService {
     if (result['evidence'] != undefined || null)
       delete result['evidence'];
 
-    console.log("result", result);
+    //console.log("result", result);
     return this.http.post(APIURL + 'ReadyForPayment', result);
   }
   closeLC(data:Transaction){
@@ -165,7 +181,7 @@ export class RestApiService {
     if (result['evidence'] != undefined || null)
       delete result['evidence'];
 
-    console.log("result", result);
+    //console.log("result", result);
     return this.http.post(APIURL + 'Close', result);
   }
 }

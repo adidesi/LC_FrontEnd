@@ -1,16 +1,18 @@
 <ion-content class="contentHeight" *ngIf="customer">
     <img src="/assets/icon/{{customer.bankObj.name}}.png" alt="logo" class="bankLogo" id="imgBank" *ngIf="customer.bankObj" />
     <ion-card>
-      <ion-header>
-          <ion-card-title>STATUS OF LC</ion-card-title>
-      </ion-header>
-   
-        <ion-item *ngFor="let stage of stages">
-            <ion-label>{{stage}}</ion-label>
-            </ion-item>
-        <!-- <ion-item><span class={{str}}></span>1</ion-item>
-        <ion-item><span class={{str}}></span>2</ion-item>
-        <ion-item><span class={{str}}></span>3</ion-item> -->
-    
+        <ion-header *ngIf="letterOfCredit">
+            <ion-card-title class="sizeTitle" text-center>{{letterOfCredit.letterId}}</ion-card-title>
+            <hr>
+            <ion-card-subtitle>Status of LC</ion-card-subtitle>
+        </ion-header>
+        <ion-item *ngFor="let transaction of stages;index as i">
+            <div class={{transaction.status}}></div>
+            <ion-label class="statusLabel">
+                {{transaction.stage}}
+                <br>{{tnx[i].date}}
+                <br>{{tnx[i].time}}
+            </ion-label>
+        </ion-item>
     </ion-card>
 </ion-content>

@@ -31,7 +31,7 @@ export class CustomerCompComponent implements OnInit {
   constructor(private authGuardService: AuthGuardService, private sessionGuardService: SessionGuardService,
     private restGuardService: RestGuardService, private router: Router, private navCtrl: NavController,
     private resolver: ComponentFactoryResolver) { 
-      console.log('3CUST COMP ')
+      //console.log('3CUST COMP ')
     }
   LCs: LetterOfCredit[] = [];
   public subscription: Subscription;
@@ -59,7 +59,7 @@ export class CustomerCompComponent implements OnInit {
     });
   }
   logout() {
-    this.LCs = [];
+    //this.LCs = [];aayushi
     this.authGuardService.logout();
   }
   showAccountDetails() {

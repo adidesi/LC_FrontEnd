@@ -7,8 +7,8 @@ export class TrackerService {
   //stages:string[]=[];
   stages = [
     "Requested by Applicant ",
-    "Accepted by Issuing Bank ",
-    "Approved by Beneficiary Bank ",
+    "Accepted by IssuingBank ",
+    "Approved by BeneficiaryBank ",
     "Acknowledged by Exporter ",
     "Products Shipped by Exporter",
     "Products Received By Importer",
@@ -19,8 +19,8 @@ export class TrackerService {
   btnDisplayArray={"alice":["1","6"],"bob":["4","5"],"ella":["3","8"],"matias":["2","7"]};
 
   constructor() { 
-    for(let i=0;i<this.stages.length;i++)
-    console.log("count",i,"stage",this.stages[i])
+    //for(let i=0;i<this.stages.length;i++)
+    //console.log("count",i,"stage",this.stages[i])
   }
   getStage(count: number) {
     return this.stages[count];

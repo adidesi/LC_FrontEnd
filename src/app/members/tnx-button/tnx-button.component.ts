@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { NavParams, ToastController } from '@ionic/angular';
 import { LCDetailsCompComponent } from '../lcdetails-comp/lcdetails-comp.component';
 import { Transaction } from '../../shared/models/Transaction';
-import { approve, SHIP, RECEIVE, PAYMENT, CLOSE } from '../../shared/constant';
+import { approve, SHIP, RECEIVE, PAYMENT, CLOSE, reject } from '../../shared/constant';
 import { SessionService } from '../../shared/providers/session.service';
 import { SessionGuardService } from '../../shared/services/session-guard.service';
 import { switchMap } from 'rxjs/operators';
@@ -42,7 +42,7 @@ export class TnxButtonComponent implements OnInit {
       this.user = new Customer(resCust);
       this.allowedStage = this.trackerService.getbtnDisplayForUser(this.user.getPersonId());
       let currentTnx: string = (1 + this.lcdetails.getLetterOfCredit().getTransactions().length).toString();
-      console.log('currentTnx', currentTnx, 'this.allowedStage', this.allowedStage, 'this.allowedStage.includes(currentTnx)', this.allowedStage.includes(currentTnx))
+      //console.log('currentTnx', currentTnx, 'this.allowedStage', this.allowedStage, 'this.allowedStage.includes(currentTnx)', this.allowedStage.includes(currentTnx))
       if (this.allowedStage.includes(currentTnx) == true) {
         this.disabledBtn = true;
       }
@@ -71,21 +71,26 @@ export class TnxButtonComponent implements OnInit {
     console.log("CANCELED");
   }
   saveData() {
-    console.log("Saved");
+    //console.log("Saved");
     this.lcdetails.createNewLC();
   }
   approveLC() {
-    console.log("Approved");
-    console.log('this.user', this.user)
-    this.tnxRequest = new Transaction({ approvingParty: '#' + this.user.getPersonId() }, approve, this.lcdetails.getLetterId())
-    console.log('this.tnxRequest', this.tnxRequest)
+    //console.log("Approved");
+    //console.log('this.user', this.user)
+    this.tnxRequest = new Transaction({ "approvingParty":"#"+this.user.getPersonId() }, approve, this.lcdetails.getLetterId())
+    //console.log('this.tnxRequest', this.tnxRequest)
     this.restApiService.approveLCData(this.tnxRequest).subscribe(res => {
       this.showTransactionToast('Transaction Success');
       this.router.navigate(['members', this.user.getPersonId()]);
     });
   }
   rejectLC() {
-    console.log("REJECTED");
+    this.tnxRequest = new Transaction({ closeReason:"Not proper" }, reject, this.lcdetails.getLetterId())
+    //console.log('this.tnxRequest', this.tnxRequest)
+    this.restApiService.rejectLCData(this.tnxRequest).subscribe(res => {
+      this.showTransactionToast('LC Rejected');
+      this.router.navigate(['members', this.user.getPersonId()]);
+    });
   }
   async showTransactionToast(msg:string) {
     const toast = await this.toastController.create({
@@ -99,7 +104,7 @@ export class TnxButtonComponent implements OnInit {
 
   shipProduct() {
     this.tnxRequest = new Transaction({ evidence: "LC uploaded" },SHIP, this.lcdetails.getLetterId())
-    console.log('this.tnxRequest', this.tnxRequest)
+    //console.log('this.tnxRequest', this.tnxRequest)
     this.restApiService.shipProduct(this.tnxRequest).subscribe(res => {
       this.showTransactionToast('Product Shipped Successfully');
       this.router.navigate(['members', this.user.getPersonId()]);
@@ -108,7 +113,7 @@ export class TnxButtonComponent implements OnInit {
   }
   receiveProduct(){
     this.tnxRequest = new Transaction({},RECEIVE, this.lcdetails.getLetterId())
-    console.log('this.tnxRequest', this.tnxRequest)
+    //console.log('this.tnxRequest', this.tnxRequest)
     this.restApiService.receiveProduct(this.tnxRequest).subscribe(res => {
       this.showTransactionToast('Product received by'+this.user.getPersonId());
       this.router.navigate(['members', this.user.getPersonId()]);
@@ -116,7 +121,7 @@ export class TnxButtonComponent implements OnInit {
 }
   payAmount(){
     this.tnxRequest = new Transaction({},PAYMENT, this.lcdetails.getLetterId())
-    console.log('this.tnxRequest', this.tnxRequest)
+    //console.log('this.tnxRequest', this.tnxRequest)
     this.restApiService.readyForPayment(this.tnxRequest).subscribe(res => {
       this.showTransactionToast('Payment made by '+this.user.getPersonId());
       this.router.navigate(['members', this.user.getPersonId()]);
@@ -124,7 +129,7 @@ export class TnxButtonComponent implements OnInit {
   }
   closeLC(){
     this.tnxRequest = new Transaction({"closeReason":"completed"},CLOSE, this.lcdetails.getLetterId())
-    console.log('this.tnxRequest', this.tnxRequest)
+    //console.log('this.tnxRequest', this.tnxRequest)
     this.restApiService.closeLC(this.tnxRequest).subscribe(res => {
       this.showTransactionToast('LC Closed by '+this.user.getPersonId());
       this.router.navigate(['members', this.user.getPersonId()]);

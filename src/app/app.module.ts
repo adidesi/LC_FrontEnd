@@ -14,6 +14,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { CreateButtonComponent } from './create-button/create-button.component';
 import { MembersComponent } from './members/members.component';
 import { PopoverComponent } from './members/popover/popover.component';
+import { Transaction } from './shared/models/Transaction';
 //import { TrackerCompComponent } from './members/tracker-comp/tracker-comp.component';
 // import { TnxButtonComponent } from './members/tnx-button/tnx-button.component';
 
@@ -24,7 +25,7 @@ import { PopoverComponent } from './members/popover/popover.component';
   providers: [
     StatusBar,
     SplashScreen,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
   ],
   bootstrap: [AppComponent]
 })

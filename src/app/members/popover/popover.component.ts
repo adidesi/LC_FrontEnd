@@ -19,7 +19,7 @@ export class PopoverComponent implements OnInit {
       this.Tracks.push(this.navParams.get('stage')[i]);
     }
     
-    console.log(this.Tracks);
+    //console.log(this.Tracks);
     // this.items=[
     //   "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","item1","item1","item1","item1","item1","item1","item1",
     // ]
